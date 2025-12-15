@@ -39,7 +39,6 @@ declare (strict_types=1);
         </label>
         <br>
         <br>
-
         <button type="sumit">Book</button>
     </form>
     
