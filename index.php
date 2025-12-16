@@ -7,6 +7,7 @@ $availability = [];
 if(isset($_POST['arrival'], $_POST['departure'])){
     $arrival = $_POST['arrival'];
     $departure = $_POST['departure'];
+
 if ($arrival < $departure){
     for($roomId = 1; $roomId <= 3; $roomId++){
         $sql = "
@@ -43,15 +44,17 @@ if ($arrival < $departure){
             <li>Standard<?= $availability[2] ? 'Available' : 'Booked' ?></li>
             <li>Luxury<?= $availability[3] ? 'Available' : 'Booked' ?></li>
         </ul>
-    <?php endif; ?>    
+    <?php endif; ?> 
+
     <h1>Book a room</h1>
     <form action="booking.php" method="post">
         <label>
             Name:
             <input type="text" name="guest_name" required>
         </label>
-        <br>
-        <br>
+
+        <br><br>
+        
         <label>
             Room:
             <select name="room_id">
