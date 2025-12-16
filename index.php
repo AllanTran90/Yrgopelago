@@ -1,5 +1,32 @@
 <?php
 declare (strict_types=1);
+require __DIR__ . 'includes/db.php';
+
+$availability = [];
+
+if(isset($_POST['arrival'], $_POST['departure'])){
+    $arrival = $_POST['arrival'];
+    $departure = $_POST['departure'];
+if ($arrival < $departure){
+    for($roomId = 1; $roomId <= 3; $roomId++){
+        $sql = "
+        SELECT COUNT (*)
+        FROM bookings
+        WHERE room_id = :room_id
+        AND arrival < :departure
+        AND departure > :arrival
+        ";
+
+        $statement = $pdo->prepare($sql);
+        $statement->execute([
+            ':room_id' => $roomId,
+            ':arrival' => $arrival,
+            ':departure' => $departure
+        ]);
+        $availability[$roomId] = $statement->fetchColumn() === 0;
+    }
+}    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
