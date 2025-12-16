@@ -1,12 +1,20 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . "/sql-database/db.php";
+require __DIR__ . "/includes/db.php";
 
-$guestname = $_POST['guest_name'];
+$guestName = $_POST['guest_name'];
 $roomId = (int)$_POST['room_id'];
 $arrival = $_POST['arrival'];
 $departure = $_POST['departure'];
+
+if (empty($guestName) || $roomId === 0 || empty($arrival) || empty($departure)){
+    die("You have top fill all the fields. <a href='index.php'>Gå tillbaka</a>");
+}
+
+if ($arrival => $departure) {
+    die("Departure has to be after Arrival. <a href='index.php'>Gå tillbaka</a>")
+}
 
 $sql = "
 SELECT COUNT(*)
