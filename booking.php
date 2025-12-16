@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . "/includes/db.php";
-
 $guestName = $_POST['guest_name'];
 $roomId = (int)$_POST['room_id'];
 $arrival = $_POST['arrival'];
