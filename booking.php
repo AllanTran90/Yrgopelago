@@ -12,8 +12,8 @@ if (empty($guestName) || $roomId === 0 || empty($arrival) || empty($departure)){
     die("You have top fill all the fields. <a href='index.php'>Gå tillbaka</a>");
 }
 
-if ($arrival => $departure) {
-    die("Departure has to be after Arrival. <a href='index.php'>Gå tillbaka</a>")
+if ($arrival >= $departure) {
+    die("Departure has to be after Arrival. <a href='index.php'>Gå tillbaka</a>");
 }
 
 $sql = "
@@ -51,5 +51,23 @@ $statement->execute([
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
-
-echo"Your booking is confirmed!";
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking confirmed</title>
+</head>
+<body>
+     <div class="success">
+        <h1>Your booking is confirmed!</h1>
+        <p><strong>name:</strong> <?= htmlspecialchars($guestName) ?></p>
+        <p><strong>Room:</strong> <?= ['', 'Budget', 'Standard', 'Luxury'][$roomId] ?></p>
+        <p><strong>Arrival:</strong> <?= htmlspecialchars($arrival) ?></p>
+        <p><strong>Departure:</strong> <?= htmlspecialchars($departure) ?></p>
+    </div>
+    <p><a href="index.php">Book again</a></p>
+    
+</body>
+</html>

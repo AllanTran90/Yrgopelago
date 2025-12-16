@@ -29,13 +29,13 @@ declare (strict_types=1);
         <br>
         <label> 
             Arrival:
-            <input type="date" name="arrival" required>
+            <input type="date" name="arrival" required min="2026-01-01" max="2026-01-31">
         </label>
         <br>
         <br>
         <label>
             Departure
-            <input type="date" name="departure" required>
+            <input type="date" name="departure" required min="2026-01-02" max="2026-02-01">
         </label>
         <br>
         <br>
