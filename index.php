@@ -1,6 +1,6 @@
 <?php
 declare (strict_types=1);
-require __DIR__ . 'includes/db.php';
+require __DIR__ . '/includes/db.php';
 
 $availability = [];
 
@@ -10,7 +10,7 @@ if(isset($_POST['arrival'], $_POST['departure'])){
 if ($arrival < $departure){
     for($roomId = 1; $roomId <= 3; $roomId++){
         $sql = "
-        SELECT COUNT (*)
+        SELECT COUNT(*)
         FROM bookings
         WHERE room_id = :room_id
         AND arrival < :departure
@@ -23,7 +23,7 @@ if ($arrival < $departure){
             ':arrival' => $arrival,
             ':departure' => $departure
         ]);
-        $availability[$roomId] = $statement->fetchColumn() === 0;
+        $availability[$roomId] = (int)$statement->fetchColumn() === 0;
     }
 }    
 }
@@ -54,6 +54,7 @@ if ($arrival < $departure){
         </label>
         <br>
         <br>
+        <h1>Check room availability</h1>
         <label> 
             Arrival:
             <input type="date" name="arrival" required min="2026-01-01" max="2026-01-31">
@@ -64,6 +65,7 @@ if ($arrival < $departure){
             Departure
             <input type="date" name="departure" required min="2026-01-02" max="2026-02-01">
         </label>
+        <button type="submit">Check availability</button>
         <br>
         <br>
         <button type="sumit">Book</button>
