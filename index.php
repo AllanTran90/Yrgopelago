@@ -36,6 +36,14 @@ if ($arrival < $departure){
     <title>Hotel bookings</title>
 </head>
 <body>
+    <?php if (!empty($availability)) : ?>
+        <h2>Availability</h2>
+        <ul>
+            <li>Budget:<?= $availability[1] ? 'Available' : 'Booked' ?></li>
+            <li>Standard<?= $availability[2] ? 'Available' : 'Booked' ?></li>
+            <li>Luxury<?= $availability[3] ? 'Available' : 'Booked' ?></li>
+        </ul>
+    <?php endif; ?>    
     <h1>Book a room</h1>
     <form action="booking.php" method="post">
         <label>
