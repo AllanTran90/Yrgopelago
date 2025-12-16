@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/includes/db.php';
+require __DIR__ . '/database/yrgopelago.db';
 
 $availability = [];
 
@@ -40,7 +40,6 @@ if (isset($_POST['check_availability'])) {
 <body>
     <h1>Welcome to Yrgopelag Hotel</h1>
 
-    <h2>Check Room Availability</h2>
     <form method="post">
         <label>
             Arrival:
@@ -55,7 +54,7 @@ if (isset($_POST['check_availability'])) {
                    min="2026-01-02" max="2026-02-01">
         </label>
         <br><br>
-        
+        <h2>Check Room Availability</h2>
         <button type="submit" name="check_availability">Check Availability</button>
     </form>
 

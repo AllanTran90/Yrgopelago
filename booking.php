@@ -9,7 +9,7 @@ $arrival = $_POST['arrival'];
 $departure = $_POST['departure'];
 
 if (empty($guestName) || $roomId === 0 || empty($arrival) || empty($departure)){
-    die("You have top fill all the fields. <a href='index.php'>Gå tillbaka</a>");
+    die("You have to fill all the fields. <a href='index.php'>Gå tillbaka</a>");
 }
 
 if ($arrival >= $departure) {
