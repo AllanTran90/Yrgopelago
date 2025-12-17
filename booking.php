@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
+require __DIR__ . '/includes/db.php';
 
 $guestName = $_POST['guest_name'];
-$roomId = (int)$_POST['room_id'];
+$room_id = (int)$_POST['room_id'];
 $arrival = $_POST['arrival'];
 $departure = $_POST['departure'];
 
-if (empty($guestName) || $roomId === 0 || empty($arrival) || empty($departure)){
+if (empty($guestName) || $room_id === 0 || empty($arrival) || empty($departure)){
     die("You have to fill all the fields. <a href='index.php'>Gå tillbaka</a>");
 }
 
@@ -52,8 +53,8 @@ $sql = "
     VALUES (
     :guest_name, :room_id, :arrival, :departure)";
 
-$pdo = $pdo->prepare($sql);
-$statement = $pdo;
+
+$statement = $pdo->prepare($sql);;
 $statement->execute([
     ':guest_name' => $guestName,
     ':room_id' => $roomId,
@@ -72,7 +73,7 @@ $statement->execute([
      <div class="success">
         <h1>Your booking is confirmed!</h1>
         <p><strong>name:</strong> <?= htmlspecialchars($guestName) ?></p>
-        <p><strong>Room:</strong> <?= ['', 'Budget', 'Standard', 'Luxury'][$roomId] ?></p>
+        <p><strong>Room:</strong> <?= ['Budget', 'Standard', 'Luxury'][$room_id] ?></p>
         <p><strong>Arrival:</strong> <?= htmlspecialchars($arrival) ?></p>
         <p><strong>Departure:</strong> <?= htmlspecialchars($departure) ?></p>
     </div>
