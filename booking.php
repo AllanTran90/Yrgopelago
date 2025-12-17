@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 
-$guestName = $_POST['guest_name'];
+$guestName = trim($_POST['guest_name'] ?? '' );
 $room_id = (int)$_POST['room_id'];
 $arrival = $_POST['arrival'];
 $departure = $_POST['departure'];
@@ -73,7 +73,7 @@ $statement->execute([
      <div class="success">
         <h1>Your booking is confirmed!</h1>
         <p><strong>name:</strong> <?= htmlspecialchars($guestName) ?></p>
-        <p><strong>Room:</strong> <?= ['Budget', 'Standard', 'Luxury'][$room_id] ?></p>
+        <p><strong>Room:</strong> <?= ['','Budget', 'Standard', 'Luxury'][$room_id] ?></p>
         <p><strong>Arrival:</strong> <?= htmlspecialchars($arrival) ?></p>
         <p><strong>Departure:</strong> <?= htmlspecialchars($departure) ?></p>
     </div>
