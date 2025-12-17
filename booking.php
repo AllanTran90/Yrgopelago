@@ -35,7 +35,7 @@ AND departure > :arrival
 
 $statement = $pdo ->prepare($sql);
 $statement -> execute([
-    ':room_id' => $roomId,
+    ':room_id' => $room_id,
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
@@ -57,7 +57,7 @@ $sql = "
 $statement = $pdo->prepare($sql);;
 $statement->execute([
     ':guest_name' => $guestName,
-    ':room_id' => $roomId,
+    ':room_id' => $room_id,
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
