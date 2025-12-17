@@ -8,7 +8,7 @@ if (isset($_POST['check_availability'])) {
     $departure = $_POST['departure'] ?? '';
     
     if ($arrival < $departure) {
-        for ($roomId = 1; $roomId <= 3; $roomId++) {
+        for ($room_id = 1; $room_id <= 3; $room_id++) {
             $sql = "
             SELECT COUNT(*)
             FROM bookings
@@ -17,9 +17,10 @@ if (isset($_POST['check_availability'])) {
             AND departure > :arrival
             ";
             
+            $pdo = new PDO('sqlite:database/yrgopelago.db');
             $statement = $pdo->prepare($sql);
             $statement->execute([
-                ':room_id' => $roomId,
+                ':room_id' => $room_id,
                 ':arrival' => $arrival,
                 ':departure' => $departure
             ]);
