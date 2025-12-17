@@ -31,6 +31,7 @@ AND arrival < :departure
 AND departure > :arrival
 ";
 
+
 $statement = $pdo ->prepare($sql);
 $statement -> execute([
     ':room_id' => $roomId,
@@ -51,7 +52,8 @@ $sql = "
     VALUES (
     :guest_name, :room_id, :arrival, :departure)";
 
-$statement = $pdo->prepare($sql);
+$pdo = $pdo->prepare($sql);
+$statement = $pdo;
 $statement->execute([
     ':guest_name' => $guestName,
     ':room_id' => $roomId,
