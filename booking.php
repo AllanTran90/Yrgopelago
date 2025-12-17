@@ -15,11 +15,11 @@ if ($arrival >= $departure) {
 }
 
 if ($arrival < '2026-01-01' || $arrival > '2026-01-31'){
-    die("Arrival must be in January 2026.");
+    die("Arrival must be within January 2026.");
 }
 
 if ($departure < '2026-01-02' || $departure > '2026-02-01'){
-    die("Departure must be in January 2026.");
+    die("Departure must be within January 2026.");
 }     
 
 
