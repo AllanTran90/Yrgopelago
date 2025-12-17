@@ -55,7 +55,7 @@ if (isset($_POST['check_availability'])) {
         </label>
         <br><br>
         <h2>Check Room Availability</h2>
-        <button type="submit" name="check_availability">Check Availability</button>
+        <button type="submit" name="check_availability">Check if the room is available</button>
     </form>
 
     
