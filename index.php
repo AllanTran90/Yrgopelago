@@ -70,7 +70,6 @@ if (isset($_POST['check_availability'])) {
     <?php endif; ?>
 
     <br><br>
-
    
     <h2>Book a Room</h2>
     <form action="booking.php" method="post">
@@ -105,6 +104,12 @@ if (isset($_POST['check_availability'])) {
         <br><br>
         
         <button type="submit">Book</button>
+        <br><br>
+          <label>
+            Transfer code:
+           <input type="text" name="transfer_code" required>
+        </label>
+        <br><br>
     </form>
 </body>
 </html>

@@ -3,18 +3,16 @@ declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/includes/centralbank.php';
 
-if (!validateTransferCode($transferCode, $totalCost)){
-    die("Payment failed.");
-}
-
-if (!depositmoney($transferCode)){
-    die("Payment couldn't be complet.");
+$transferCode = $_POST['transfer_code'] ?? '' ;
+if (empty($transferCode)){
+    die("Transfer code is required. <a href='index.php'>Go back</a>");
 }
 
 $guestName = trim($_POST['guest_name'] ?? '' );
 $room_id = (int)$_POST['room_id'];
 $arrival = $_POST['arrival'];
 $departure = $_POST['departure'];
+
 
 if (empty($guestName) || $room_id === 0 || empty($arrival) || empty($departure)){
     die("You have to fill all the fields. <a href='index.php'>Gå tillbaka</a>");
@@ -56,10 +54,20 @@ if ($booked > 0) {
     exit;
 }
 
+
 $paymentok = chargeCentralBank($room_id, $arrival, $departure);
 if (!$paymentok){
     die ('Payment failed. Bookling cancelled. <a href="index.php">Go backa/a>');
 }
+
+
+//if (!validateTransferCode($transferCode, $totalCost)){
+   // die("Payment failed.");
+//}
+
+//if (!depositmoney($transferCode)){
+  //  die("Payment couldn't be complet.");
+//}
 
 $sql = "
     INSERT INTO bookings (
