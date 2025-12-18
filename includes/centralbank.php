@@ -10,3 +10,8 @@ function chargeCentralBank (int $room_id, string $arrival, string $departure): b
     
     return true;
 }
+
+function depositMoney(string $transferCode): bool{
+
+    return true;
+}

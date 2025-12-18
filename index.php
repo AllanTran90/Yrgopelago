@@ -108,6 +108,8 @@ if (isset($_POST['check_availability'])) {
           <label>
             Transfer code:
            <input type="text" name="transfer_code" required>
+           <br>
+           <button type="submit">Transfer</button>
         </label>
         <br><br>
     </form>
