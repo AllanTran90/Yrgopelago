@@ -3,6 +3,14 @@ declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/includes/centralbank.php';
 
+if (!validateTransferCode($transferCode, $totalCost)){
+    die("Payment failed.");
+}
+
+if (!depositmoney($transferCode)){
+    die("Payment couldn't be complet.");
+}
+
 $guestName = trim($_POST['guest_name'] ?? '' );
 $room_id = (int)$_POST['room_id'];
 $arrival = $_POST['arrival'];
