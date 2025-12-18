@@ -9,9 +9,9 @@ if (empty($transferCode)){
 }
 
 $guestName = trim($_POST['guest_name'] ?? '' );
-$room_id = (int)$_POST['room_id'];
-$arrival = $_POST['arrival'];
-$departure = $_POST['departure'];
+$room_id = (int)$_POST['room_id'] ?? '';
+$arrival = $_POST['arrival'] ?? '';
+$departure = $_POST['departure'] ?? '';
 
 
 if (empty($guestName) || $room_id === 0 || empty($arrival) || empty($departure)){
@@ -57,17 +57,23 @@ if ($booked > 0) {
 
 $paymentok = chargeCentralBank($room_id, $arrival, $departure);
 if (!$paymentok){
-    die ('Payment failed. Bookling cancelled. <a href="index.php">Go backa/a>');
+    die ('Payment failed. Booking cancelled. <a href="index.php">Go backa/a>');
 }
 
+$arrivalDate = new DateTime($arrival);
+$departureDate = new DateTime($departure);
 
-//if (!validateTransferCode($transferCode, $totalCost)){
-   // die("Payment failed.");
-//}
+$nights = $arrivalaDate->diff($departureDate)->days;
 
-//if (!depositmoney($transferCode)){
-  //  die("Payment couldn't be complet.");
-//}
+$statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
+$statement-> execute(['id => $room_id']);
+$room = $statement->fetch();
+
+if (!$room){
+    die('Room is not found.<a href="index.php.>Go back</a>"');
+}
+
+$totalprice = $night * $room['price'];               
 
 $sql = "
     INSERT INTO bookings (
