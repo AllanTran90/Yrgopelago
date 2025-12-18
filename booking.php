@@ -48,6 +48,11 @@ if ($booked > 0) {
     exit;
 }
 
+$paymentok = chargeCentralBank($room_id, $arrival, $departure);
+if (!$paymentok){
+    die ('Payment failed. Bookling cancelled. <a href="index.php">Go backa/a>');
+}
+
 $sql = "
     INSERT INTO bookings (
     guest_name, room_id, arrival, departure)
