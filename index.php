@@ -105,13 +105,13 @@ if (isset($_POST['check_availability'])) {
         
         <button type="submit">Book</button>
         <br><br>
-          <label>
-            Transfer code:
-           <input type="text" name="transfer_code" required>
-           <br>
-           <button type="submit">Transfer</button>
-        </label>
-        <br><br>
+        <!-- <label> -->
+            <!-- Transfer code: -->
+           <!-- <input type="text" name="transfer_code" required> -->
+           <!-- <br> -->
+           <!-- <button type="submit">Transfer</button> -->
+        <!-- </label> -->
+        <!-- <br><br>*/ -->
     </form>
 </body>
 </html>

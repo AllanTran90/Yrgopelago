@@ -3,10 +3,10 @@ declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/includes/centralbank.php';
 
-$transferCode = $_POST['transfer_code'] ?? '' ;
-if (empty($transferCode)){
-    die("Transfer code is required. <a href='index.php'>Go back</a>");
-}
+// $transferCode = $_POST['transfer_code'] ?? '' ;
+// if (empty($transferCode)){
+    // die("Transfer code is required. <a href='index.php'>Go back</a>");
+// }
 
 $guestName = trim($_POST['guest_name'] ?? '' );
 $room_id = (int)$_POST['room_id'] ?? '';
@@ -55,25 +55,28 @@ if ($booked > 0) {
 }
 
 
-$paymentok = chargeCentralBank($room_id, $arrival, $departure);
-if (!$paymentok){
-    die ('Payment failed. Booking cancelled. <a href="index.php">Go backa/a>');
-}
-
 $arrivalDate = new DateTime($arrival);
 $departureDate = new DateTime($departure);
-
-$nights = $arrivalaDate->diff($departureDate)->days;
+//diff- function gives DateInterval(the diff between night and day).
+//->day is a function in DateInterval
+$nights = $arrivalDate->diff($departureDate)->days;
 
 $statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
-$statement-> execute(['id => $room_id']);
+$statement-> execute(['id' => $room_id]);
 $room = $statement->fetch();
 
 if (!$room){
-    die('Room is not found.<a href="index.php.>Go back</a>"');
+    die('Room is not found. <a href="index.php.">Go back</a>');
 }
 
-$totalprice = $night * $room['price'];               
+$pricePernight =(int)$room['price'];
+
+$totalprice = $night * $pricePernight; 
+
+$paymentok = chargeCentralBank($room_id, $arrival, $departure)
+if (!$paymentok){
+    die ('Payment failed. Booking cancelled. <a href="index.php">Go back</a>');
+}
 
 $sql = "
     INSERT INTO bookings (
