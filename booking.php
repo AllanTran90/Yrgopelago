@@ -8,10 +8,10 @@ require __DIR__ . '/includes/centralbank.php';
     // die("Transfer code is required. <a href='index.php'>Go back</a>");
 // }
 
-$guestName = trim($_POST['guest_name'] ?? '' );
-$room_id = (int)$_POST['room_id'] ?? '';
-$arrival = $_POST['arrival'] ?? '';
-$departure = $_POST['departure'] ?? '';
+$guestName = trim(($_POST['guest_name']) ?? '' );
+$room_id = ((int)$_POST['room_id'] ?? '');
+$arrival = ($_POST['arrival'] ?? '');
+$departure = ($_POST['departure'] ?? '');
 
 
 if (empty($guestName) || $room_id === 0 || empty($arrival) || empty($departure)){
@@ -65,7 +65,7 @@ $statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
 $statement-> execute([':id' => $room_id]);
 $room = $statement->fetch();
 
-if (!$room){
+if ($room === false){
     die('Room is not found. <a href="index.php">Go back</a>');
 }
 
@@ -86,7 +86,7 @@ $sql = "
     :guest_name, :room_id, :arrival, :departure)";
 
 
-$statement = $pdo->prepare($sql);;
+$statement = $pdo->prepare($sql);
 $statement->execute([
     ':guest_name' => $guestName,
     ':room_id' => $room_id,
