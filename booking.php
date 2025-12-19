@@ -71,10 +71,11 @@ if (!$room){
 
 $pricePernight =(int)$room['price'];
 
-$totalprice = $night * $pricePernight; 
+$totalprice = $nights * $pricePernight; 
 
-$paymentok = chargeCentralBank($room_id, $arrival, $departure)
-if (!$paymentok){
+$paymentok = chargeCentralBank($room_id, $arrival, $departure);
+
+if (!$paymentok === false){
     die ('Payment failed. Booking cancelled. <a href="index.php">Go back</a>');
 }
 
@@ -88,7 +89,7 @@ $sql = "
 $statement = $pdo->prepare($sql);;
 $statement->execute([
     ':guest_name' => $guestName,
-    ':room_id' => $room_id,
+    ':id' => $room_id,
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
