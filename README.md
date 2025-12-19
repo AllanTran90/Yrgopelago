@@ -1,11 +1,14 @@
 Yrgopelago project.
 
-This is my bookingsystem for a hotelproject that I build in PHP and SQL as my database.
+This is a bookingsystem for my hotelproject that I with softwear sush as:
 
-Technics that i used:
 - PHP
 - SQL
 - HTML
 - CSS
 - PDO
+
+The system allows users to:
+- Check room availability for specific dates.
+- Book a room within fixed date range (january).
 

@@ -62,11 +62,11 @@ $departureDate = new DateTime($departure);
 $nights = $arrivalDate->diff($departureDate)->days;
 
 $statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
-$statement-> execute(['id' => $room_id]);
+$statement-> execute([':id' => $room_id]);
 $room = $statement->fetch();
 
 if (!$room){
-    die('Room is not found. <a href="index.php.">Go back</a>');
+    die('Room is not found. <a href="index.php">Go back</a>');
 }
 
 $pricePernight =(int)$room['price'];
@@ -75,7 +75,7 @@ $totalprice = $nights * $pricePernight;
 
 $paymentok = chargeCentralBank($room_id, $arrival, $departure);
 
-if (!$paymentok === false){
+if ($paymentok === false){
     die ('Payment failed. Booking cancelled. <a href="index.php">Go back</a>');
 }
 
@@ -89,7 +89,7 @@ $sql = "
 $statement = $pdo->prepare($sql);;
 $statement->execute([
     ':guest_name' => $guestName,
-    ':id' => $room_id,
+    ':room_id' => $room_id,
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
