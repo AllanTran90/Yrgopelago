@@ -95,7 +95,15 @@ $statement->execute([
     ':departure' => $departure
 ]);
 
-
+if (!empty($availability)) : ?>
+        <h3>Availability Results:</h3>
+        <ul>
+            <li>Budget: <?= $availability[1] ? '✅ Available' : '❌ Booked' ?></li>
+            <li>Standard: <?= $availability[2] ? '✅ Available' : '❌ Booked' ?></li>
+            <li>Luxury: <?= $availability[3] ? '✅ Available' : '❌ Booked' ?></li>
+        </ul>
+    <?php endif; ?>
+    
 // $bookingId = $pdo->lastInsertId();
 // $statement->execute([
 //     ':booking_id' => $bookingId,

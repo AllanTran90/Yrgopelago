@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <title>Hotel Bookings</title>
 </head>
 <body>
@@ -26,15 +27,6 @@
         <button type="submit" name="check_availability">Check if the room is available</button>
     </form>
 
-    
-    <?php if (!empty($availability)) : ?>
-        <h3>Availability Results:</h3>
-        <ul>
-            <li>Budget: <?= $availability[1] ? '✅ Available' : '❌ Booked' ?></li>
-            <li>Standard: <?= $availability[2] ? '✅ Available' : '❌ Booked' ?></li>
-            <li>Luxury: <?= $availability[3] ? '✅ Available' : '❌ Booked' ?></li>
-        </ul>
-    <?php endif; ?>
 
     <br><br>
    
@@ -63,17 +55,100 @@
         
         <label>
             Arrival:
-            <input type="date" name="arrival" required 
-                   min="2026-01-01" max="2026-01-31">
+            <!-- <input type="date" name="arrival" required 
+                   min="2026-01-01" max="2026-01-31"> -->
         </label>
         <br><br>
-        
-        <label>
-            Departure:
-            <input type="date" name="departure" required 
-                   min="2026-01-02" max="2026-02-01">
-        </label>
+        <h1>Arrival</h1>
+
+<div class="month">      
+  <ul>
+    <li>
+      January<br>
+      <span style="font-size:18px">2026</span>
+    </li>
+  </ul>
+</div>
+
+<ul class="days">  
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+  <li>5</li>
+  <li>6</li>
+  <li>7</li>
+  <li>8</li>
+  <li>9</li>
+  <li>10</li>
+  <li>11</li>
+  <li>12</li>
+  <li>13</li>
+  <li>14</li>
+  <li>15</li>
+  <li>16</li>
+  <li>17</li>
+  <li>18</li>
+  <li>19</li>
+  <li>20</li>
+  <li>21</li>
+  <li>22</li>
+  <li>23</li>
+  <li>24</li>
+  <li>25</li>
+  <li>26</li>
+  <li>27</li>
+  <li>28</li>
+  <li>29</li>
+  <li>30</li>
+  <li>31</li>
+</ul>
+    
         <br><br>
+           <h1>Departure</h1>
+
+<div class="month">      
+  <ul>
+    <li>
+      January<br>
+      <span style="font-size:18px">2026</span>
+    </li>
+  </ul>
+</div>
+
+<ul class="days">  
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+  <li>5</li>
+  <li>6</li>
+  <li>7</li>
+  <li>8</li>
+  <li>9</li>
+  <li>10</li>
+  <li>11</li>
+  <li>12</li>
+  <li>13</li>
+  <li>14</li>
+  <li>15</li>
+  <li>16</li>
+  <li>17</li>
+  <li>18</li>
+  <li>19</li>
+  <li>20</li>
+  <li>21</li>
+  <li>22</li>
+  <li>23</li>
+  <li>24</li>
+  <li>25</li>
+  <li>26</li>
+  <li>27</li>
+  <li>28</li>
+  <li>29</li>
+  <li>30</li>
+  <li>31</li>
+</ul>
         
         <button type="submit">Book</button>
         <br><br>
