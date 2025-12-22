@@ -3,13 +3,14 @@ declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/includes/centralbank.php';
 
-// $transferCode = $_POST['transfer_code'] ?? '' ;
-// if (empty($transferCode)){
-    // die("Transfer code is required. <a href='index.php'>Go back</a>");
-// }
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: index.php');
+    exit;
+}
 
 $guestName = trim(($_POST['guest_name']) ?? '' );
-$room_id = ((int)$_POST['room_id'] ?? '');
+$room_id = ((int)$_POST['room_id']?? 0);
 $arrival = ($_POST['arrival'] ?? '');
 $departure = ($_POST['departure'] ?? '');
 
