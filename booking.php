@@ -70,15 +70,15 @@ if ($room === false){
     die('Room is not found. <a href="index.php">Go back</a>');
 }
 
-$pricePernight =(int)$room['price'];
+// $pricePernight =(int)$room['price'];
 
-$totalprice = $nights * $pricePernight; 
+// $totalprice = $nights * $pricePernight; 
 
-$paymentok = chargeCentralBank($totalprice);
+// $paymentok = chargeCentralBank($totalprice);
 
-if ($paymentok === false){
-    die ('Payment failed. Booking cancelled. <a href="index.php">Go back</a>');
-}
+// if ($paymentok === false){
+//     die ('Payment failed. Booking cancelled. <a href="index.php">Go back</a>');
+// }
 
 $sql = "
     INSERT INTO bookings (
@@ -94,10 +94,6 @@ $statement->execute([
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
-
-var_dump($room_id);
-var_dump($room);
-die;
 
 
 // $bookingId = $pdo->lastInsertId();
