@@ -74,7 +74,7 @@ $pricePernight =(int)$room['price'];
 
 $totalprice = $nights * $pricePernight; 
 
-$paymentok = chargeCentralBank($room_id, $arrival, $departure);
+$paymentok = chargeCentralBank($totalprice);
 
 if ($paymentok === false){
     die ('Payment failed. Booking cancelled. <a href="index.php">Go back</a>');
@@ -94,6 +94,17 @@ $statement->execute([
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
+
+var_dump($room_id);
+var_dump($room);
+die;
+
+
+// $bookingId = $pdo->lastInsertId();
+// $statement->execute([
+//     ':booking_id' => $bookingId,
+//     ':amount'=> $totalprice
+// ]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
