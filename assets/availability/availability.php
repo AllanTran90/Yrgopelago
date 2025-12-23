@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require __DIR__ . '/assets/includes/db.php';
 
-$data = $_GET['date'] ?? '' ;
+$date = $_GET['date'] ?? '' ;
 
 if (!$date){
     echo json_encode([]);
@@ -13,7 +13,7 @@ $result = [];
 
 for ($roomId = 1; $roomId <= 3; $roomId++){
     $sql = "
-        SELECT COUNT (*) FROM bookings
+        SELECT COUNT(*) FROM bookings
         WHERE room_id = :room_id
         AND arrival <= :date
         AND departure > :date

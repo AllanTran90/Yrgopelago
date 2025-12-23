@@ -104,12 +104,7 @@ if (!empty($availability)) : ?>
         </ul>
     <?php endif; ?>
     
-// $bookingId = $pdo->lastInsertId();
-// $statement->execute([
-//     ':booking_id' => $bookingId,
-//     ':amount'=> $totalprice
-// ]);
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
