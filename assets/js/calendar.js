@@ -1,18 +1,64 @@
-const bookedDays = [, ,];
-document.querySelectorAll('.days li'). forEach(day => {
-    const dayNumber = parseInt(days.textContent);
 
-    if (bookedDays.includes(dayNumber)){
-        day.classList.add('booked');
-    }
-    else{
-        day.classList.add('available');
-    }
-    
-    day.addEventListener('click', () =>{
-        if(day.classList.contains('booked')) return;
+document.addEventListener('DOMContentLoaded', () => {
 
-        document.querySelectorAll('.days.li'). forEach (d => d.classList.remove('active'));
-        day.classList.add('active');
+  const arrivalInput = document.getElementById('arrivalInput');
+  const departureInput = document.getElementById('departureInput');
+
+  // ARRIVAL
+  document.querySelectorAll('.arrival-days li').forEach(day => {
+    day.addEventListener('click', () => {
+      const date = formatDate(day);
+      arrivalInput.value = date;
+
+      clearActive('.arrival-days');
+      day.classList.add('active');
+
+      fetchAvailability(date);
     });
+  });
+
+  // DEPARTURE
+  document.querySelectorAll('.departure-days li').forEach(day => {
+    day.addEventListener('click', () => {
+      const date = formatDate(day);
+      departureInput.value = date;
+
+      clearActive('.departure-days');
+      day.classList.add('active');
+    });
+  });
+
 });
+
+
+
+function formatDate(dayElement) {
+  const day = dayElement.textContent.trim().padStart(2, '0');
+  return `2026-01-${day}`;
+}
+
+function clearActive(selector) {
+  document.querySelectorAll(`${selector} .active`)
+    .forEach(el => el.classList.remove('active'));
+}
+
+/* Availability */
+
+function fetchAvailability(date) {
+  fetch(`/api/availability.php?date=${date}`)
+    .then(res => res.json())
+    .then(data => {
+      document.querySelectorAll('#availability li').forEach(li => {
+        const roomId = li.dataset.room;
+        const span = li.querySelector('span');
+
+        if (data[roomId]) {
+          span.textContent = 'Available';
+          span.className = 'available';
+        } else {
+          span.textContent = 'Booked';
+          span.className = 'booked';
+        }
+      });
+    });
+}

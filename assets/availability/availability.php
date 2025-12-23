@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require __DIR__ . '/assets/includes/db.php';
 
-$data = $_POST['date'] ?? '' ;
+$data = $_GET['date'] ?? '' ;
 
 if (!$date){
     echo json_encode([]);

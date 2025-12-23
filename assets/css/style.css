@@ -15,6 +15,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .month {
@@ -75,6 +77,9 @@ body {
   cursor: pointer;
   padding: 4px 0;
   border-radius: 4px;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
 }
 
 .days li.available{

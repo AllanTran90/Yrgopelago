@@ -51,6 +51,8 @@
                 <option value="3">Luxury</option>
             </select>
         </label>
+        <input type="hidden" name="arrival" id="arrivalInput">
+        <input type="hidden" name="departure" id="departureInput">
         <br><br>
         
         <div class="layout"></div>
@@ -67,7 +69,7 @@
     </ul>
 </div>
 
-    <ul class="days">  
+    <ul class="days arrival-days">  
     <li>1</li>
     <li>2</li>
     <li>3</li>
@@ -103,7 +105,8 @@
 </div>
 
         <br><br>
-        
+<div class="layout"></div>
+<div class="calendars">        
 <h1>Departure</h1>
 <div class="calendar">
     <div class="month">      
@@ -115,7 +118,7 @@
   </ul>
 </div>
 
-<ul class="days">  
+<ul class="days departure-days">  
   <li>1</li>
   <li>2</li>
   <li>3</li>
@@ -164,10 +167,13 @@
     <li data-room="3">Luxury: <span></span></li>
   </ul>
 </div>
-        <button type="submit">Book</button>
+     
+
+    <button type="submit">Book</button>
+</form>
         <br><br>
        
-    </form>
+   
     <script src="/assets/js/calendar.js"></script>
 </body>
 </html>
