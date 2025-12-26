@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
 
   const arrivalInput = document.getElementById('arrivalInput');
@@ -30,8 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
-
 function formatDate(dayElement) {
   const day = dayElement.textContent.trim().padStart(2, '0');
   return `2026-01-${day}`;
@@ -42,12 +39,12 @@ function clearActive(selector) {
     .forEach(el => el.classList.remove('active'));
 }
 
-/* Availability */
-
 function fetchAvailability(date) {
   fetch(`/api/availability.php?date=${date}`)
     .then(res => res.json())
     .then(data => {
+
+      // update roomli
       document.querySelectorAll('#availability li').forEach(li => {
         const roomId = li.dataset.room;
         const span = li.querySelector('span');
@@ -60,5 +57,21 @@ function fetchAvailability(date) {
           span.className = 'booked';
         }
       });
-    });
+
+      // colored dates
+      const dayLis = document.querySelectorAll('.arrival-days li');
+      dayLis.forEach(li => li.classList.remove('available', 'booked'));
+
+      const dayNumber = parseInt(date.split('-')[2], 10);
+      const clickedDay = [...dayLis].find(li =>
+        parseInt(li.textContent, 10) === dayNumber
+      );
+
+      if (clickedDay) {
+        const allAvailable = Object.values(data).every(v => v === true);
+        clickedDay.classList.add(allAvailable ? 'available' : 'booked');
+      }
+
+    })
+    .catch(error => console.error('Availability error:', error));
 }

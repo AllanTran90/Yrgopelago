@@ -70,16 +70,6 @@ if ($room === false){
     die('Room is not found. <a href="index.php">Go back</a>');
 }
 
-// $pricePernight =(int)$room['price'];
-
-// $totalprice = $nights * $pricePernight; 
-
-// $paymentok = chargeCentralBank($totalprice);
-
-// if ($paymentok === false){
-//     die ('Payment failed. Booking cancelled. <a href="index.php">Go back</a>');
-// }
-
 $sql = "
     INSERT INTO bookings (
     guest_name, room_id, arrival, departure)
@@ -94,16 +84,7 @@ $statement->execute([
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
-
-if (!empty($availability)) : ?>
-        <h3>Availability Results:</h3>
-        <ul>
-            <li>Budget: <?= $availability[1] ? '✅ Available' : '❌ Booked' ?></li>
-            <li>Standard: <?= $availability[2] ? '✅ Available' : '❌ Booked' ?></li>
-            <li>Luxury: <?= $availability[3] ? '✅ Available' : '❌ Booked' ?></li>
-        </ul>
-    <?php endif; ?>
-    
+?>
 
 <!DOCTYPE html>
 <html lang="en">
