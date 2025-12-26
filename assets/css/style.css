@@ -132,3 +132,10 @@ body {
     color: #f80404;
     font-weight: bold;
 }
+
+.calendar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 280px;
+}

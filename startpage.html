@@ -1,75 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <title>Hotel Bookings</title>
-</head>
-<body>
-    <h1>Welcome to Yrgopelag Hotel</h1>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <title>Hotel Bookings</title>
+    </head>
+    <body>
+        <h1>Welcome to Yrgopelag Hotel</h1>
 
-    <form method="post">
-        <label>
-            Arrival:
-            <input type="date" name="arrival" required 
-                   min="2026-01-01" max="2026-01-31">
-        </label>
         <br><br>
-        
-        <label>
-            Departure:
-            <input type="date" name="departure" required 
-                   min="2026-01-02" max="2026-02-01">
-        </label>
-        <br><br>
-        <h2>Check Room Availability</h2>
-        <button type="submit" name="check_availability">Check if the room is available</button>
-    </form>
+    
+        <h2>Book a Room</h2>
+        <form action="booking.php" method="post">
+            <label>
+                Name:
+                <input type="text" name="guest_name" required>
+            </label>
+            <br><br>
+            <label>
+                E-mail:
+                <input type="text" email="email" required>
+            </label>
+            <br><br>
+            
+            <label>
+                Room:
+                <select name="room_id" required>
+                    <option value="1">Budget</option>
+                    <option value="2">Standard</option>
+                    <option value="3">Luxury</option>
+                </select>
+            </label>
+            <input type="hidden" name="arrival" id="arrivalInput">
+            <input type="hidden" name="departure" id="departureInput">
+            <br><br>
+            
+            <div class="calendar-stack"></div>
+            <div class="layout"></div>
+            <div class="calendars"></div>
+                <h1>Arrival</h1>
+            <div class ="calendar"></div>
+            <div class="month"> 
+            <ul>
+                <li>    
+                    <br><br>
+                    January<br>      
+            <span style="font-size:18px">2026</span>
+            </li>
+        </ul>
+    </div>
 
+        <ul class="days arrival-days">  
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>19</li>
+        <li>20</li>
+        <li>21</li>
+        <li>22</li>
+        <li>23</li>
+        <li>24</li>
+        <li>25</li>
+        <li>26</li>
+        <li>27</li>
+        <li>28</li>
+        <li>29</li>
+        <li>30</li>
+        <li>31</li>
+        </ul>
+    </div>
 
-    <br><br>
-   
-    <h2>Book a Room</h2>
-    <form action="booking.php" method="post">
-        <label>
-            Name:
-            <input type="text" name="guest_name" required>
-        </label>
-        <br><br>
-        <label>
-            E-mail:
-            <input type="text" email="email" required>
-        </label>
-        <br><br>
-        
-        <label>
-            Room:
-            <select name="room_id" required>
-                <option value="1">Budget</option>
-                <option value="2">Standard</option>
-                <option value="3">Luxury</option>
-            </select>
-        </label>
-        <input type="hidden" name="arrival" id="arrivalInput">
-        <input type="hidden" name="departure" id="departureInput">
-        <br><br>
-        
-        <div class="layout"></div>
-        <div class="calendars"></div>
-            <h1>Arrival</h1>
-        <div class ="calendar"></div>
-        <div class="month"> 
-        <ul>
-            <li>    
-                <br><br>
-                January<br>      
+            <br><br>
+    <div class="layout"></div>
+    <div class="calendars">        
+    <h1>Departure</h1>
+    <div class="calendar">
+        <div class="month">      
+    <ul>
+        <li>
+        January<br>
         <span style="font-size:18px">2026</span>
         </li>
     </ul>
-</div>
+    </div>
 
-    <ul class="days arrival-days">  
+    <ul class="days departure-days">  
     <li>1</li>
     <li>2</li>
     <li>3</li>
@@ -102,78 +133,29 @@
     <li>30</li>
     <li>31</li>
     </ul>
-</div>
+    </div>        
+    </div>
 
-        <br><br>
-<div class="layout"></div>
-<div class="calendars">        
-<h1>Departure</h1>
-<div class="calendar">
-    <div class="month">      
-  <ul>
-    <li>
-      January<br>
-      <span style="font-size:18px">2026</span>
-    </li>
-  </ul>
-</div>
+    <div class="content">
 
-<ul class="days departure-days">  
-  <li>1</li>
-  <li>2</li>
-  <li>3</li>
-  <li>4</li>
-  <li>5</li>
-  <li>6</li>
-  <li>7</li>
-  <li>8</li>
-  <li>9</li>
-  <li>10</li>
-  <li>11</li>
-  <li>12</li>
-  <li>13</li>
-  <li>14</li>
-  <li>15</li>
-  <li>16</li>
-  <li>17</li>
-  <li>18</li>
-  <li>19</li>
-  <li>20</li>
-  <li>21</li>
-  <li>22</li>
-  <li>23</li>
-  <li>24</li>
-  <li>25</li>
-  <li>26</li>
-  <li>27</li>
-  <li>28</li>
-  <li>29</li>
-  <li>30</li>
-  <li>31</li>
-</ul>
-</div>        
-</div>
+    </div>
+    </div>
 
-<div class="content">
+    <div id="availability">
+    <h3>Room availability</h3>
+    <ul>
+        <li data-room="1">Budget: <span></span></li>
+        <li data-room="2">Standard: <span></span></li>
+        <li data-room="3">Luxury: <span></span></li>
+    </ul>
+    </div>
+        
 
-</div>
-</div>
-
-<div id="availability">
-  <h3>Room availability</h3>
-  <ul>
-    <li data-room="1">Budget: <span></span></li>
-    <li data-room="2">Standard: <span></span></li>
-    <li data-room="3">Luxury: <span></span></li>
-  </ul>
-</div>
-     
-
-    <button type="submit">Book</button>
-</form>
-        <br><br>
-       
-   
-    <script src="/assets/js/calendar.js"></script>
-</body>
-</html>
+        <button type="submit">Book</button>
+    </form>
+            <br><br>
+        
+    
+        <script src="/assets/js/calendar.js"></script>
+    </body>
+    </html>
