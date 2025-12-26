@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/assets/includes/db.php';
+require __DIR__ . '/../../includes/db.php';
 
 $date = $_GET['date'] ?? '' ;
 
-if (!$date){
+if ($date === ''){
     echo json_encode([]);
     exit;
 }

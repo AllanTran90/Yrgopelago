@@ -40,7 +40,7 @@ function clearActive(selector) {
 }
 
 function fetchAvailability(date) {
-  fetch(`/api/availability.php?date=${date}`)
+  fetch(`/assets/availability/availability.php?date=${date}`)
     .then(res => res.json())
     .then(data => {
 
