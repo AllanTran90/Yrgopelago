@@ -139,3 +139,9 @@ body {
   gap: 40px;
   max-width: 280px;
 }
+
+.calendar-title {
+  width: 220px;          /* samma som .month */
+  text-align: center;
+  
+}

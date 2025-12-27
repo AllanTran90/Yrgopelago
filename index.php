@@ -19,7 +19,7 @@ if (isset($_POST['check_availability'])) {
             AND departure > :arrival
             ";
             
-            //$pdo = new PDO('sqlite:database/yrgopelago.db');
+           
             $statement = $pdo->prepare($sql);
             $statement->execute([
                 ':room_id' => $room_id,

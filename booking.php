@@ -3,7 +3,6 @@ declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/includes/centralbank.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
     exit;
@@ -58,8 +57,6 @@ if ($booked > 0) {
 
 $arrivalDate = new DateTime($arrival);
 $departureDate = new DateTime($departure);
-//diff- function gives DateInterval(the diff between night and day).
-//->day is a function in DateInterval
 $nights = $arrivalDate->diff($departureDate)->days;
 
 $statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
