@@ -2,6 +2,8 @@
 declare(strict_types=1);
 require __DIR__ . '/../../includes/db.php';
 
+header('Content-Type: application/json');
+
 $date = $_GET['date'] ?? '' ;
 
 if ($date === ''){
@@ -23,12 +25,12 @@ for ($roomId = 1; $roomId <= 3; $roomId++){
 $statement = $pdo->prepare($sql);
 $statement->execute([
     ':room_id' => $roomId,
-    ':date' => $date
+    ':date' => $date,
 ]);
 
-    $result[$roomId] = $statement->fetchColumn() == 0;
+    $result[$roomId] = $statement->fetchColumn() === 0;
 
 }
 
-header('Content-Type: application/json');
+
 echo json_encode($result);

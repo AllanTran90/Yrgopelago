@@ -44,10 +44,16 @@ function fetchAvailability(date) {
     .then(res => res.json())
     .then(data => {
 
+      if (!data || Object.keys(data).length === 0){
+        return;
+      }
+
       // update roomli
       document.querySelectorAll('#availability li').forEach(li => {
         const roomId = li.dataset.room;
         const span = li.querySelector('span');
+
+        span.classList.remove('available', 'booked');
 
         if (data[roomId]) {
           span.textContent = 'Available';

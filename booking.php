@@ -14,20 +14,24 @@ $arrival = ($_POST['arrival'] ?? '');
 $departure = ($_POST['departure'] ?? '');
 
 
-if (empty($guestName) || $room_id === 0 || empty($arrival) || empty($departure)){
-    die("You have to fill all the fields. <a href='index.php'>Gå tillbaka</a>");
+if ($guestName === '' || $room_id === 0 || $arrival === '' || $departure === ''){
+    echo "Booking failed. <a href='index.php'>Gå tillbaka</a>";
+    exit;
 }
 
 if ($arrival >= $departure) {
-    die("Departure has to be after Arrival. <a href='index.php'>Gå tillbaka</a>");
+   echo "Wrong booking date. <a href='index.php'>Gå tillbaka</a>";
+   exit;
 }
 
 if ($arrival < '2026-01-01' || $arrival > '2026-01-31'){
-    die("Arrival must be within January 2026.");
+    echo "Arrival must be within January 2026.";
+    exit;
 }
 
 if ($departure < '2026-01-02' || $departure > '2026-02-01'){
-    die("Departure must be within January 2026.");
+    echo "Departure must be within January 2026.";
+    exit;
 }     
 
 
@@ -39,13 +43,18 @@ AND arrival < :departure
 AND departure > :arrival
 ";
 
-
+try{
 $statement = $pdo ->prepare($sql);
 $statement -> execute([
     ':room_id' => $room_id,
     ':arrival' => $arrival,
     ':departure' => $departure
 ]);
+}catch(PDOException $error){
+    error_log('Availability check failed: ' . $error->getMessage());
+    echo "Booking failed";
+    exit;
+}
 
 $booked = $statement-> fetchColumn();
 
@@ -59,12 +68,21 @@ $arrivalDate = new DateTime($arrival);
 $departureDate = new DateTime($departure);
 $nights = $arrivalDate->diff($departureDate)->days;
 
+try{
 $statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
 $statement-> execute([':id' => $room_id]);
 $room = $statement->fetch();
 
+} catch (PDOException $e) {
+    error_log('Room lookup failed: ' . $e->getMessage());
+    echo "Booking failed.";
+    exit;
+}
+
 if ($room === false){
-    die('Room is not found. <a href="index.php">Go back</a>');
+      error_log('Room not found. room_id=' . $room_id);
+    echo "Booking failed. <a href='index.php'>Go back</a>";
+    exit;
 }
 
 $sql = "
@@ -73,14 +91,19 @@ $sql = "
     VALUES (
     :guest_name, :room_id, :arrival, :departure)";
 
-
+try {
 $statement = $pdo->prepare($sql);
 $statement->execute([
     ':guest_name' => $guestName,
     ':room_id' => $room_id,
     ':arrival' => $arrival,
     ':departure' => $departure
-]);
+]);}
+     catch (PDOException $e) {
+    error_log('Booking insert failed: ' . $e->getMessage());
+    echo "Booking failed.";
+    exit;
+};
 ?>
 
 <!DOCTYPE html>
