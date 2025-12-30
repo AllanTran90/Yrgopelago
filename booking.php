@@ -22,7 +22,6 @@ $featurePrices =[
 ];
 
 $featureCost = 0;
-
 foreach ($selectFeatures as $feature){
     if (isset($featurePrices[$feature])){
         $featureCost += $featurePrices[$feature];
@@ -78,19 +77,16 @@ if ($booked > 0) {
     exit;
 }
 
-
+//coiunting nights
 $arrivalDate = new DateTime($arrival);
 $departureDate = new DateTime($departure);
 $nights = $arrivalDate->diff($departureDate)->days;
 
+//Get room price
 try{
 $statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
 $statement-> execute([':id' => $room_id]);
 $room = $statement->fetch();
-
-$pricePernight = (int)$room['price'];
-$roomCost = $roomPernight * $nights;
-$totalCost = $roomCost + $feature;
 
 } catch (PDOException $e) {
     error_log('Room lookup failed: ' . $e->getMessage());
@@ -103,6 +99,12 @@ if ($room === false){
     echo "Booking failed. <a href='index.php'>Go back</a>";
     exit;
 }
+
+$pricePernight = (int)$room['price'];
+$roomCost = $roomPernight * $nights;
+$totalCost = $roomCost + $featureCost;
+
+
 
 $sql = "
     INSERT INTO bookings (
@@ -139,6 +141,12 @@ $statement->execute([
         <p><strong>Room:</strong> <?= ['','Budget', 'Standard', 'Luxury'][$room_id] ?></p>
         <p><strong>Arrival:</strong> <?= htmlspecialchars($arrival) ?></p>
         <p><strong>Departure:</strong> <?= htmlspecialchars($departure) ?></p>
+
+        <br>
+
+        <p><strong>Room cost:</strong><?= $roomCost ?> credits</p>
+        <p><strong>Features cost:</strong><?= $featureCost ?> credits</p>
+        <p><strong>Total cost:</strong><?= $totalCost ?> credits</p>
     </div>
     <p><a href="index.php">Book again</a></p>
     
