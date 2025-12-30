@@ -13,6 +13,21 @@ $room_id = ((int)$_POST['room_id']?? 0);
 $arrival = ($_POST['arrival'] ?? '');
 $departure = ($_POST['departure'] ?? '');
 
+$selectFeatures = $_POST['features'] ?? [];
+$featurePrices =[
+    'scuba' => 5,
+    'pingpong' => 5,
+    'bicykle' => 5,
+    'casino' => 17,
+];
+
+$featureCost = 0;
+
+foreach ($selectFeatures as $feature){
+    if (isset($featurePrices[$feature])){
+        $featureCost += $featurePrices[$feature];
+    }
+}
 
 if ($guestName === '' || $room_id === 0 || $arrival === '' || $departure === ''){
     echo "Booking failed. <a href='index.php'>Gå tillbaka</a>";
@@ -72,6 +87,9 @@ try{
 $statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
 $statement-> execute([':id' => $room_id]);
 $room = $statement->fetch();
+
+$pricePernight = (int)$room['price'];
+$roomCost =
 
 } catch (PDOException $e) {
     error_log('Room lookup failed: ' . $e->getMessage());
