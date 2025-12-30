@@ -89,7 +89,8 @@ $statement-> execute([':id' => $room_id]);
 $room = $statement->fetch();
 
 $pricePernight = (int)$room['price'];
-$roomCost =
+$roomCost = $roomPernight * $nights;
+$totalCost = $roomCost + $feature;
 
 } catch (PDOException $e) {
     error_log('Room lookup failed: ' . $e->getMessage());
