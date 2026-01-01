@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/.env.php';
 
 //validations of transfercod//
 function validateTransferCode(string $transferCode, int $totalCost): bool{
