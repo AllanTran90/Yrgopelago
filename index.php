@@ -1,13 +1,21 @@
 <?php
 declare(strict_types=1);
-$errors = [];
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
+session_start();
+
+require __DIR__ . '/includes/db.php';
+require __DIR__ . '/assets/availability/availability.php';
+
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    //get input
     $guestName = trim($_POST['guest_name'] ?? '' );
     $email = trim($_POST['email'] ?? '');
     $roomId = (int)($_POST['room_id'] ?? 0);
     $arrival = $_POST['arrival'] ?? '';
     $departure = $_POST['departure'] ?? '';
+    $features = $_POST['features'] ?? [];
 
     if ($guestName === ''){
         $errors[]= 'Name is required.';
@@ -29,6 +37,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $errors[] = 'Departure must be after arrival.';
     }
 
+    //availabilitycheck
+    if(empty($errors)){
+        $availability = getAvailabilityForDate($pdo, $arrival);
+
+        if(!isset($availability[$roomId]) || $availability[$roomId] === false){
+            $errors[]= 'Selected room is not available for the chosen date.';
+        }
+    }
+
+    //redirect to booking if everything is ok
+    if (empty($errors)){
+        $_SESSION['booking'] = [
+            'guest_name' => $guestName,
+            'email' => $email,
+            'room_id' => $roomId,
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'features' => $features,
+        ];
+
+        header('Location: booking.php');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
