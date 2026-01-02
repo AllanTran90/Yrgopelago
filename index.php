@@ -1,7 +1,33 @@
 <?php
 declare(strict_types=1);
-$error = [];
+$errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    $guestName = trim($_POST['guest_name'] ?? '' );
+    $email = trim($_POST['email'] ?? '');
+    $roomId = (int)($_POST['room_id'] ?? 0);
+    $arrival = $_POST['arrival'] ?? '';
+    $departure = $_POST['departure'] ?? '';
+
+    if ($guestName === ''){
+        $errors[]= 'Name is required.';
+    }
+
+    if ($email === '') {
+        $errors[] = 'Email is required.';
+    }
+
+    if ($roomId === 0) {
+        $errors[] = 'Room must be selected.';
+    }
+
+    if ($arrival === '' || $departure === '') {
+        $errors[] = 'Arrival and departure dates are required.';
+    }
+
+    if ($arrival !== '' && $departure !== '' && $arrival >= $departure) {
+        $errors[] = 'Departure must be after arrival.';
+    }
 
 }
 ?>
