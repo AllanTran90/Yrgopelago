@@ -1,36 +1,28 @@
 <?php
 declare(strict_types=1);
-require __DIR__ . '/../../includes/db.php';
 
-header('Content-Type: application/json');
+require __DIR__ . '/includes/db.php';
 
-$date = $_GET['date'] ?? '' ;
+function getAvailabilityForDate(PDO $pdo, string $date): array
+{
+    $availability = [];
 
-if ($date === ''){
-    echo json_encode([]);
-    exit;
+    for ($roomId = 1; $roomId <= 3; $roomId++) {
+        $sql = "
+            SELECT COUNT(*) FROM bookings
+            WHERE room_id = :room_id
+              AND arrival <= :date
+              AND departure > :date
+        ";
+
+        $statement = $pdo->prepare($sql);
+        $statement->execute([
+            ':room_id' => $roomId,
+            ':date' => $date,
+        ]);
+
+        $availability[$roomId] = $statement->fetchColumn() === 0;
+    }
+
+    return $availability;
 }
-
-$result = [];
-
-for ($roomId = 1; $roomId <= 3; $roomId++){
-    $sql = "
-        SELECT COUNT(*) FROM bookings
-        WHERE room_id = :room_id
-        AND arrival <= :date
-        AND departure > :date
-    ";
- 
-
-$statement = $pdo->prepare($sql);
-$statement->execute([
-    ':room_id' => $roomId,
-    ':date' => $date,
-]);
-
-    $result[$roomId] = $statement->fetchColumn() === 0;
-
-}
-
-
-echo json_encode($result);
