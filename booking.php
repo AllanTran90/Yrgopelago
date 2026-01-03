@@ -125,6 +125,24 @@ $statement->execute([
     echo "Booking failed.";
     exit;
 };
+
+session_start();
+
+$_SESSION['confirmation'] = [
+    'guest_name'   => $guestName,
+    'room_name'    => ['','Budget','Standard','Luxury'][$room_id],
+    'arrival'      => $arrival,
+    'departure'    => $departure,
+    'nights'       => $nights,
+    'room_cost'    => $roomCost,
+    'feature_cost' => $featureCost,
+    'total_cost'   => $totalCost,
+    'transfer_code'=> $transferCode,
+];
+
+header('Location: confirmation.php');
+exit;
+
 header('Location: index.php?booked=1');
 exit;
 ?>
