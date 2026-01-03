@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . '/includes/db.php';
+require __DIR__ . '/../../includes/db.php';
 
 function getAvailabilityForDate(PDO $pdo, string $date): array
 {
@@ -9,19 +9,20 @@ function getAvailabilityForDate(PDO $pdo, string $date): array
 
     for ($roomId = 1; $roomId <= 3; $roomId++) {
         $sql = "
-            SELECT COUNT(*) FROM bookings
+            SELECT COUNT(*)
+            FROM bookings
             WHERE room_id = :room_id
               AND arrival <= :date
               AND departure > :date
         ";
 
-        $statement = $pdo->prepare($sql);
-        $statement->execute([
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
             ':room_id' => $roomId,
-            ':date' => $date,
+            ':date'    => $date,
         ]);
 
-        $availability[$roomId] = $statement->fetchColumn() === 0;
+        $availability[$roomId] = $stmt->fetchColumn() === 0;
     }
 
     return $availability;

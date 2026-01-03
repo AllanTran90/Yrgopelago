@@ -169,6 +169,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     </label>
 
     <br><br>
+    <h2>Room availability</h2>
+
+<ul id="availability">
+  <li data-room="1">Budget room: <span></span></li>
+  <li data-room="2">Standard room: <span></span></li>
+  <li data-room="3">Luxury room: <span></span></li>
+</ul>
+<br><br>
 
     <button type="submit">Book room</button>
 
