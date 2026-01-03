@@ -101,7 +101,7 @@ if ($room === false){
 }
 
 $pricePernight = (int)$room['price'];
-$roomCost = $roomPernight * $nights;
+$roomCost = $pricePernight * $nights;
 $totalCost = $roomCost + $featureCost;
 
 
@@ -125,6 +125,8 @@ $statement->execute([
     echo "Booking failed.";
     exit;
 };
+header('Location: index.php?booked=1');
+exit;
 ?>
 
 <!DOCTYPE html>
