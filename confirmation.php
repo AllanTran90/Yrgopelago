@@ -45,7 +45,7 @@ unset($_SESSION['confirmation']);
 <h2>🏦 Payment (Central Bank of Yrgopelag)</h2>
 <p>
     Payment was successfully processed by
-    <strong>Turisten Rune</strong> 🧙‍♂️
+    <strong>Turisten </strong> 🧙‍♂️
 </p>
 
 <p>
