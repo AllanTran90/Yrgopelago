@@ -81,3 +81,23 @@ function fetchAvailability(date) {
     })
     .catch(error => console.error('Availability error:', error));
 }
+
+document.querySelectorAll('#availability li').forEach(li => {
+  li.addEventListener('click', () => {
+    const roomId = li.dataset.room;
+    const status = li.querySelector('span');
+
+    if (status.classList.contains('booked')) {
+      alert('This room is already booked');
+      return;
+    }
+
+    document.querySelectorAll('#availability li')
+      .forEach(el => el.classList.remove('active'));
+
+    li.classList.add('active');
+
+
+    document.getElementById('roomInput').value = roomId;
+  });
+});

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require __DIR__ . '/includes/db.php';
@@ -35,15 +36,7 @@ require __DIR__ . '/assets/availability/availability.php';
     </label>
     <br><br>
 
-    <label>
-        Room:
-        <select name="room_id" required>
-            <option value="">Select room</option>
-            <option value="1">Budget</option>
-            <option value="2">Standard</option>
-            <option value="3">Luxury</option>
-        </select>
-    </label>
+    <input type="hidden" name="room_id" id="roomInput">
 
     <!-- dates from calendar -->
     <input type="hidden" name="arrival" id="arrivalInput">
@@ -93,20 +86,58 @@ require __DIR__ . '/assets/availability/availability.php';
     </div>
 
     <h3>Features</h3>
-    <label><input type="checkbox" name="features[]" value="scuba"> Scuba diving (+5)</label><br>
-    <label><input type="checkbox" name="features[]" value="pingpong"> Ping pong (+5)</label><br>
-    <label><input type="checkbox" name="features[]" value="bicykle"> Bicycle (+5)</label><br>
-    <label><input type="checkbox" name="features[]" value="casino"> Casino (+17)</label>
+     <label> 
+        <input type="checkbox" name="features[]" value="scuba"> Scuba diving (+5) 
+    </label><br> 
+    <label> 
+        <input type="checkbox" name="features[]" value="pingpong"> Ping pong (+5) 
+    </label><br> 
+    <label> 
+        <input type="checkbox" name="features[]" value="bicykle"> Bicycle (+5) 
+    </label><br> 
+    <label> 
+        <input type="checkbox" name="features[]" value="casino"> Casino (+17) 
+    </label> <br><br>
+
+    <h2>Room availability</h2>
+
+<ul id="availability">
+  <li data-room="1">
+    <label>
+      <input type="checkbox" name="room_id" value="1">
+      Budget room: <span class="status booked">Booked</span>
+    </label>
+  </li>
+
+  <li data-room="2">
+    <label>
+      <input type="checkbox" name="room_id" value="2">
+      Standard room: <span class="status available">Available</span>
+    </label>
+  </li>
+
+  <li data-room="3">
+    <label>
+      <input type="checkbox" name="room_id" value="3">
+      Luxury room: <span class="status available">Available</span>
+    </label>
+  </li>
+</ul>
 
     <br><br>
 
-    <h2>Room availability</h2>
-    <ul id="availability">
-      <li data-room="1">Budget room: <span></span></li>
-      <li data-room="2">Standard room: <span></span></li>
-      <li data-room="3">Luxury room: <span></span></li>
-    </ul>
+    <p>
+    To complete your booking, you must <br>generate a transfer code from the
+    <a href="http://www.yrgopelag.se/centralbank" target="_blank">
+        Central Bank of Yrgopelag
+    </a>.
+    </p><br><br>
 
+
+    <label>
+        Transfer code:
+        <input type="text" name="transfer_code" required>
+    </label>
     <br><br>
     <button type="submit">Book room</button>
 

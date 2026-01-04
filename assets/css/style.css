@@ -145,3 +145,11 @@ body {
   text-align: center;
   
 }
+
+input[type="checkbox"] {
+    appearance: auto;
+    -webkit-appearance: checkbox;
+    background: initial;
+    box-shadow: none;
+    accent-color: auto;
+}

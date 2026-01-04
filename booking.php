@@ -12,6 +12,7 @@ $guestName = trim(($_POST['guest_name']) ?? '' );
 $room_id = ((int)$_POST['room_id']?? 0);
 $arrival = ($_POST['arrival'] ?? '');
 $departure = ($_POST['departure'] ?? '');
+$transferCode = trim($_POST['transfer_code'] ?? '');
 
 $selectFeatures = $_POST['features'] ?? [];
 $featurePrices =[
@@ -104,6 +105,10 @@ $pricePernight = (int)$room['price'];
 $roomCost = $pricePernight * $nights;
 $totalCost = $roomCost + $featureCost;
 
+if (!validateTransferCode($transferCode, $totalCost)) {
+    echo "Payment failed. Invalid transfer code.";
+    exit;
+}
 
 
 $sql = "
@@ -127,6 +132,11 @@ $statement->execute([
 };
 
 session_start();
+
+if (!validateTransferCode($transferCode, $totalCost)) {
+    echo "Payment failed. Invalid transfer code.";
+    exit;
+}
 
 $_SESSION['confirmation'] = [
     'guest_name'   => $guestName,
