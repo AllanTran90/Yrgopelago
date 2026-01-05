@@ -149,7 +149,7 @@ $featurePrices = [
 
     <p>
     To complete your booking, you must <br>generate a transfer code from the
-    <a href="http://www.yrgopelag.se/centralbank" target="_blank">
+    <a href="http://www.yrgopelag.se/centralbank" target="_blank" class="action-link">>
         Central Bank of Yrgopelag
     </a>.
     </p><br><br>

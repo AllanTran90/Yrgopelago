@@ -217,3 +217,12 @@ span {
   padding: 0 40px;
   position: relative;
 }
+
+.action-link {
+  color: #056bfb;
+  font-weight: 600;
+}
+
+.action-link:hover {
+  color: #cafb05;
+}

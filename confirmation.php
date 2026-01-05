@@ -53,7 +53,7 @@ unset($_SESSION['confirmation']);
     <code><?= htmlspecialchars($data['transfer_code']) ?></code>
 </p>
 
-<a href="index.php">⬅ Book another stay</a>
+<a href="index.php" class="action-link">>⬅ Book another stay</a>
 
 </body>
 </html>

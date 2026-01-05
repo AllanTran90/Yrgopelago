@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const roomPrices = {
-    1: 10,
-    2: 20,
-    3: 30
+    1: 5,
+    2: 7,
+    3: 10
   };
 
   const featurePrices = {
