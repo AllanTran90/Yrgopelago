@@ -1,9 +1,20 @@
 <?php
-
 declare(strict_types=1);
-
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/assets/availability/availability.php';
+$roomPrices = [
+    1 => 10, 
+    2 => 20, 
+    3 => 30  
+];
+
+$featurePrices = [
+    'scuba'    => 5,
+    'pingpong' => 5,
+    'bicycle'  => 5,
+    'casino'   => 17
+];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +24,7 @@ require __DIR__ . '/assets/availability/availability.php';
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
+<div class="page">
 
 <?php if (isset($_GET['booked'])): ?>
   <p class="success">
@@ -105,13 +117,13 @@ require __DIR__ . '/assets/availability/availability.php';
         <input type="checkbox" name="features[]" value="casino"> Casino (+17) 
     </label> <br><br>
 
-    <h2>Room availability</h2>
+<h2>Room availability</h2>
 
 <ul id="availability">
   <li data-room="1">
     <label>
       <input type="checkbox" name="room_id" value="1">
-      Budget room: <span class="status booked">Booked</span>
+      Budget room : <span class="status booked">Booked</span>
     </label>
   </li>
 
@@ -131,6 +143,9 @@ require __DIR__ . '/assets/availability/availability.php';
 </ul>
 
     <br><br>
+<p id="totalPrice">
+  <strong>Total amount: 0 kr</strong>
+</p>
 
     <p>
     To complete your booking, you must <br>generate a transfer code from the
@@ -152,12 +167,13 @@ require __DIR__ . '/assets/availability/availability.php';
 <!--------intro, right side------->
 <div class="hotel-intro">
     <h2>	The Cozy Maui Retreat </h2>
-     <p>
-       A beach resort next to the water eith focus of relaxing, comfort and upplevelser.
-        Välj mellan budget-, standard- och lyxrum – alla med närhet till havet.
+    <p>
+       A beach resort next to the water with the focus of relaxing, comfort and treat.
+       Chose between budget-, standard- or luxuryroom. All of these just a step away from the ocean.
     </p>
 </div>
 
 <script src="/assets/js/calendar.js"></script>
+</div>
 </body>
 </html>

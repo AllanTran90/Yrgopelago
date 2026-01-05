@@ -27,6 +27,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const roomPrices = {
+    1: 10,
+    2: 20,
+    3: 30
+  };
+
+  const featurePrices = {
+    scuba: 5,
+    pingpong: 5,
+    bicykle: 5,
+    casino: 17
+  };
+
+  function updateTotal() {
+    let total = 0;
+
+    // selected room
+    const selectedRoom = document.getElementById('roomInput').value;
+    if (selectedRoom && roomPrices[selectedRoom]) {
+      total += roomPrices[selectedRoom];
+    }
+
+    // selected features
+    document
+      .querySelectorAll('input[name="features[]"]:checked')
+      .forEach(feature => {
+        total += featurePrices[feature.value] || 0;
+      });
+
+    const totalEl = document.getElementById('totalPrice');
+    if (totalEl) {
+      totalEl.innerHTML = `<strong>Total amount: ${total} kr</strong>`;
+    }
+  }
+
+  // the choosen features
+  document
+    .querySelectorAll('input[name="features[]"]')
+    .forEach(input => {
+      input.addEventListener('change', updateTotal);
+    });
+
+  // update when a room is choosen
+  document
+    .querySelectorAll('#availability li')
+    .forEach(li => {
+      li.addEventListener('click', updateTotal);
+    });
+
 });
 
 function formatDate(dayElement) {
