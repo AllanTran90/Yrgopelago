@@ -19,6 +19,11 @@ body {
   z-index: 1;
 }
 
+.calendar,
+.calendar * {
+  text-shadow: none;
+}
+
 .month {
   padding: 8px 0px;
   width: 220px;
@@ -152,4 +157,45 @@ input[type="checkbox"] {
     background: initial;
     box-shadow: none;
     accent-color: auto;
+}
+
+.layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.room-images {
+  width: 360px;
+  display: flex;
+  margin-top:40px ;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.room-images img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  background-image: url("/assets/images/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffffff;
+}
+
+label,
+p,
+li,
+span {
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.85);
 }

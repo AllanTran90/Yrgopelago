@@ -20,7 +20,7 @@ require __DIR__ . '/assets/availability/availability.php';
   </p>
 <?php endif; ?>
 
-<h1>Welcome to Yrgopelag Hotel ⭐⭐⭐</h1>
+<h1>Welcome to The Cozy Maui Retreat ⭐⭐⭐</h1>
 
 <form method="post" action="booking.php">
 
@@ -83,9 +83,15 @@ require __DIR__ . '/assets/availability/availability.php';
         </div>
 
       </div>
+      
+      <div class="room-images">
+          <img src="/assets/images/budget-room.png" alt="Budget room">
+          <img src="/assets/images/standard-room.jpeg" alt="Standard room">
+          <img src="/assets/images/luxury-room.png" alt="Luxury room">
+      </div>
     </div>
 
-    <h3>Features</h3>
+    <h2>Features</h2>
      <label> 
         <input type="checkbox" name="features[]" value="scuba"> Scuba diving (+5) 
     </label><br> 
@@ -142,6 +148,15 @@ require __DIR__ . '/assets/availability/availability.php';
     <button type="submit">Book room</button>
 
 </form>
+
+<!--------intro, right side------->
+<div class="hotel-intro">
+    <h2>	The Cozy Maui Retreat </h2>
+     <p>
+       A beach resort next to the water eith focus of relaxing, comfort and upplevelser.
+        Välj mellan budget-, standard- och lyxrum – alla med närhet till havet.
+    </p>
+</div>
 
 <script src="/assets/js/calendar.js"></script>
 </body>

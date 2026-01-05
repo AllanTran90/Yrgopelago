@@ -9,7 +9,7 @@ if (function_exists('validateTransferCode')) {
 // validations of transfer code
 function validateTransferCode(string $transferCode, int $totalCost): bool
 {
-    $url = 'http://www.yrgopelag.se/centralbank/transferCode';
+    $url = "http://www.yrgopelag.se/centralbank/transferCode?code=" . urlencode($transferCode);
 
     $postdata = [
         'transferCode' => $transferCode,
