@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ARRIVAL
   document.querySelectorAll('.arrival-days li').forEach(day => {
     day.addEventListener('click', () => {
+       console.log('DAY CLICKED', day.textContent);
+
       const date = formatDate(day);
       arrivalInput.value = date;
 
@@ -89,7 +91,7 @@ function clearActive(selector) {
 }
 
 function fetchAvailability(date) {
-  fetch(`/assets/availability/availability-api.php?date=${date}`)
+ fetch(`/assets/availability/availability-api.php?date=` + date)
     .then(res => res.json())
     .then(data => {
 

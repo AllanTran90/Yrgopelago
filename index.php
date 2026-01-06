@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/assets/availability/availability.php';
@@ -97,9 +98,9 @@ $featurePrices = [
       </div>
       
       <div class="room-images">
-          <img src="/assets/images/budget-room.png" alt="Budget room">
-          <img src="/assets/images/standard-room.jpeg" alt="Standard room">
-          <img src="/assets/images/luxury-room.png" alt="Luxury room">
+          <img src="assets/images/budget-room.png" alt="Budget room">
+          <img src="assets/images/standard-room.jpeg" alt="Standard room">
+          <img src="assets/images/luxury-room.png" alt="Luxury room">
       </div>
     </div>
 
@@ -173,7 +174,7 @@ $featurePrices = [
     </p>
 </div>
 
-<script src="/assets/js/calendar.js"></script>
+<script src="assets/js/calendar.js"></script>
 </div>
 </body>
 </html>
