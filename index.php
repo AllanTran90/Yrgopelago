@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/assets/availability/availability.php';
@@ -22,7 +21,7 @@ $featurePrices = [
 <head>
     <meta charset="UTF-8">
     <title>Yrgopelag Hotel</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <div class="page">

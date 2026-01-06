@@ -186,12 +186,11 @@ body {
   margin: 0;
   min-height: 100vh;
   text-shadow: 0 2px 6px rgba(0,0,0,0.6);
-  background-image: url("/assets/images/background.png");
+  background-image: url('../images/background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  color: #ffffff;
 }
 
 label,
@@ -214,8 +213,9 @@ span {
 .page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
-  position: relative;
+  padding: 40px;
+  background: transparent;
+  color: #fff;
 }
 
 .action-link {
