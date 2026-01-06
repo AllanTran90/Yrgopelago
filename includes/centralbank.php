@@ -1,5 +1,9 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
 // protect from dubbleloading
 if (function_exists('validateTransferCode')) {
@@ -9,60 +13,52 @@ if (function_exists('validateTransferCode')) {
 // validations of transfer code
 function validateTransferCode(string $transferCode, int $totalCost): bool
 {
-    $url = "http://www.yrgopelag.se/centralbank/transferCode?code=" . urlencode($transferCode);
+    $client = new Client([
+        'base_uri' => 'http://www.yrgopelag.se',
+        'timeout'  => 3,
+    ]);
 
-    $postdata = [
-        'transferCode' => $transferCode,
-        'totalCost'    => $totalCost,
-    ];
+    try {
+        $response = $client->post('/centralbank/transferCode', [
+            'form_params' => [
+                'transferCode' => $transferCode,
+                'totalCost'    => $totalCost,
+            ],
+        ]);
 
-    $options = [
-        'http' => [
-            'method'  => 'POST',
-            'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
-            'content' => http_build_query($postdata),
-            'timeout' => 5
-        ],
-    ];
+        $data = json_decode($response->getBody()->getContents(), true);
 
-    $context  = stream_context_create($options);
-    $response = file_get_contents($url, false, $context);
+        return isset($data['status']) && $data['status'] === 'success';
 
-    if ($response === false) {
+    } catch (\Throwable $e) {
+        error_log('Centralbank validation failed: ' . $e->getMessage());
         return false;
     }
-
-    $result = json_decode($response, true);
-    return isset($result['status']) && $result['status'] === 'success';
 }
 
 // deposit money to hotel owner
 function depositMoney(string $user, string $apiKey, string $transferCode): bool
 {
-    $url = 'http://www.yrgopelag.se/centralbank/deposit';
+    $client = new Client([
+        'base_uri' => 'http://www.yrgopelag.se',
+        'timeout'  => 5,
+    ]);
 
-    $data = [
-        'user'         => $user,
-        'api_key'      => $apiKey,
-        'transferCode' => $transferCode,
-    ];
+    try {
+        $response = $client->post('/centralbank/deposit', [
+            'json' => [
+                'user'         => $user,
+                'api_key'      => $apiKey,
+                'transferCode' => $transferCode,
+            ],
+        ]);
 
-    $options = [
-        'http' => [
-            'method'  => 'POST',
-            'header'  => "Content-Type: application/json\r\n",
-            'content' => json_encode($data),
-            'timeout' => 5,
-        ],
-    ];
+        $data = json_decode($response->getBody()->getContents(), true);
 
-    $context  = stream_context_create($options);
-    $response = @file_get_contents($url, false, $context);
+        return isset($data['status']) && $data['status'] === 'success';
 
-    if ($response === false) {
+    } catch (\Throwable $e) {
+        error_log('Centralbank deposit failed: ' . $e->getMessage());
         return false;
     }
-
-    $result = json_decode($response, true);
-    return isset($result['status']) && $result['status'] === 'success';
 }

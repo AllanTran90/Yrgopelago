@@ -105,11 +105,6 @@ $pricePernight = (int)$room['price'];
 $roomCost = $pricePernight * $nights;
 $totalCost = $roomCost + $featureCost;
 
-if (!validateTransferCode($transferCode, $totalCost)) {
-    echo "Payment failed. Invalid transfer code.";
-    exit;
-}
-
 
 $sql = "
     INSERT INTO bookings (
@@ -153,8 +148,7 @@ $_SESSION['confirmation'] = [
 header('Location: confirmation.php');
 exit;
 
-header('Location: index.php?booked=1');
-exit;
+
 ?>
 
 <!DOCTYPE html>
