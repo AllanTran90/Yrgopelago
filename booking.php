@@ -1,8 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-declare(strict_types=1);
+session_start();
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/includes/centralbank.php';
 
@@ -52,7 +49,6 @@ if ($departure < '2026-01-02' || $departure > '2026-02-01'){
     exit;
 }     
 
-
 $sql = "
 SELECT COUNT(*)
 FROM bookings
@@ -75,6 +71,14 @@ $statement -> execute([
 }
 
 $booked = $statement-> fetchColumn();
+
+var_dump([
+    'room_id' => $room_id,
+    'arrival' => $arrival,
+    'departure' => $departure,
+    'count' => $booked
+]);
+exit;
 
 if ($booked > 0) {
     echo "This room is not available these date.";
@@ -108,6 +112,11 @@ $pricePernight = (int)$room['price'];
 $roomCost = $pricePernight * $nights;
 $totalCost = $roomCost + $featureCost;
 
+if (!validateTransferCode($transferCode, $totalCost)) {
+    echo "Payment failed. Invalid transfer code.";
+    exit;
+}
+
 
 $sql = "
     INSERT INTO bookings (
@@ -128,13 +137,6 @@ $statement->execute([
     echo "Booking failed.";
     exit;
 };
-
-session_start();
-
-if (!validateTransferCode($transferCode, $totalCost)) {
-    echo "Payment failed. Invalid transfer code.";
-    exit;
-}
 
 $_SESSION['confirmation'] = [
     'guest_name'   => $guestName,
