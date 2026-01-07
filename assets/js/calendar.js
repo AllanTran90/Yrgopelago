@@ -78,6 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
       li.addEventListener('click', updateTotal);
     });
 
+      if (location.search.includes('refresh')) {
+    const arrivalValue = arrivalInput.value;
+
+    if (arrivalValue) {
+      fetchAvailability(arrivalValue);
+    }
+  }
+
 });
 
 function formatDate(dayElement) {
