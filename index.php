@@ -47,10 +47,10 @@ $featurePrices = [
         <input type="email" name="email" required>
     </label>
     <br><br>
-
-    <input type="hidden" name="room_id" id="roomInput">
-
+    
+    
     <!-- dates from calendar -->
+    <input type="hidden" name="room_id" id="roomInput">
     <input type="hidden" name="arrival" id="arrivalInput">
     <input type="hidden" name="departure" id="departureInput">
 
@@ -123,7 +123,7 @@ $featurePrices = [
   <li data-room="1">
     <label>
       <input type="checkbox" name="room_id" value="1">
-      Budget room : <span class="status booked">Booked</span>
+      Budget room : <span class="status available">Available</span>
     </label>
   </li>
 

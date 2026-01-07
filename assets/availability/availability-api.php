@@ -5,9 +5,9 @@ require __DIR__ . '/../../includes/db.php';
 require __DIR__ . '/availability.php';
 
 
-$date = $_GET['date'] ?? '';
+$date = $_GET['date'] ?? null;
 
-if ($date === '') {
+if ($date === null) {
     header('Content-Type: application/json');
     echo json_encode([]);
     exit;
