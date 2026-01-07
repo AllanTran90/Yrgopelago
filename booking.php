@@ -72,14 +72,6 @@ $statement -> execute([
 
 $booked = $statement-> fetchColumn();
 
-var_dump([
-    'room_id' => $room_id,
-    'arrival' => $arrival,
-    'departure' => $departure,
-    'count' => $booked
-]);
-exit;
-
 if ($booked > 0) {
     echo "This room is not available these date.";
     exit;
