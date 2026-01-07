@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       clearActive('.departure-days');
       day.classList.add('active');
+      if (arrivalInput.value){
+        fetchAvailability(arrivalInput.value);
+      }
     });
   });
 
@@ -89,20 +92,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function formatDate(dayElement) {
-  const day = dayElement.textContent.trim().padStart(2, '0');
-  return `2026-01-${day}`;
+  const day = Number(dayElement.innerText);
+  return `2026-01-${String(day).padStart(2, '0')}`;
 }
 
 function clearActive(selector) {
   document.querySelectorAll(`${selector} .active`)
     .forEach(el => el.classList.remove('active'));
 }
-
 function fetchAvailability(date) {
- fetch(`/assets/availability/availability-api.php?date=${date}`)
+  console.log('fetchAvailability CALLED with', date);
+function fetchAvailability(date) {
+ fetch(`THIS_SHOULD_FAIL`)
     .then(res => res.json())
     .then(data => {
-
+      
       if (!data || Object.keys(data).length === 0){
         return;
       }
@@ -114,14 +118,10 @@ function fetchAvailability(date) {
 
         span.classList.remove('available', 'booked');
 
-        if (data[roomId]) {
-          span.textContent = 'Available';
-          span.className = 'available';
-        } else {
-          span.textContent = 'Booked';
-          span.className = 'booked';
-        }
-      });
+          span.className = 'status' + (data[roomId] ? 'available' : 'booked');
+          span.textContent = data[roomId] ? 'Available' : 'Booked';
+      
+          });
 
       // colored dates
       const dayLis = document.querySelectorAll('.arrival-days li');

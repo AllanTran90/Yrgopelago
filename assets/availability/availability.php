@@ -3,6 +3,15 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../includes/db.php';
 
+header('Content-Type: application/json');
+
+$data = $_GET['date'] ?? null;
+
+if (!$date) {
+    echo json_encode([]);
+    exit;
+}
+
 function getAvailabilityForDate(PDO $pdo, string $date): array
 {
     $availability = [];
@@ -22,8 +31,12 @@ function getAvailabilityForDate(PDO $pdo, string $date): array
             ':date'    => $date,
         ]);
 
-        $availability[$roomId] = $stmt->fetchColumn() === 0;
+        $availability[$roomId] = ((int)$stmt->fetchColumn() === 0);
     }
 
     return $availability;
 }
+
+echo json_encode(
+    getAvailabilityForDate($pdo, $date)
+);
