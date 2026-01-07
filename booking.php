@@ -144,32 +144,3 @@ $_SESSION['confirmation'] = [
 
 header('Location: confirmation.php');
 exit;
-
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking confirmed</title>
-</head>
-<body>
-     <div class="success">
-        <h1>Your booking is confirmed!</h1>
-        <p><strong>name:</strong> <?= htmlspecialchars($guestName) ?></p>
-        <p><strong>Room:</strong> <?= ['','Budget', 'Standard', 'Luxury'][$room_id] ?></p>
-        <p><strong>Arrival:</strong> <?= htmlspecialchars($arrival) ?></p>
-        <p><strong>Departure:</strong> <?= htmlspecialchars($departure) ?></p>
-
-        <br>
-
-        <p><strong>Room cost:</strong><?= $roomCost ?> credits</p>
-        <p><strong>Features cost:</strong><?= $featureCost ?> credits</p>
-        <p><strong>Total cost:</strong><?= $totalCost ?> credits</p>
-    </div>
-    <p><a href="index.php">Book again</a></p>
-    
-</body>
-</html>
