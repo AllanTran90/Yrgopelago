@@ -130,8 +130,8 @@ function fetchAvailability(arrivalDate, departureDate = null) {
 
 
           span.classList.remove('available', 'booked');
-          span.className.add(data[roomId] ? 'available' : 'booked');
-          span.textContent = data[roomId] ?  'AVAILABLE!!!' : 'BOOKED!!!';
+          span.classList.add(data[roomId] ? 'available' : 'booked');
+          span.textContent = data[roomId] ?  'Available' : 'Booked';
       
           });
 
