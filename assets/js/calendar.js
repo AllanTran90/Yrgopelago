@@ -20,15 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DEPARTURE
   document.querySelectorAll('.departure-days li').forEach(day => {
+
     day.addEventListener('click', () => {
       const date = formatDate(day);
       departureInput.value = date;
 
       clearActive('.departure-days');
       day.classList.add('active');
-      if (arrivalInput.value){
-        fetchAvailability(arrivalInput.value);
-      }
+
+      
+        fetchAvailability(arrivalInput.value + date);
+      
     });
   });
 
@@ -102,8 +104,8 @@ function clearActive(selector) {
 }
 function fetchAvailability(date) {
   console.log('fetchAvailability CALLED with', date);
-function fetchAvailability(date) {
- fetch(`THIS_SHOULD_FAIL`)
+
+  fetch(`/yrgopelago/assets/availability/availability.php?date=${date}`)
     .then(res => res.json())
     .then(data => {
       
@@ -118,7 +120,7 @@ function fetchAvailability(date) {
 
         span.classList.remove('available', 'booked');
 
-          span.className = 'status' + (data[roomId] ? 'available' : 'booked');
+          span.className = 'status ' + (data[roomId] ? 'available' : 'booked');
           span.textContent = data[roomId] ? 'Available' : 'Booked';
       
           });

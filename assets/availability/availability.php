@@ -5,7 +5,7 @@ require __DIR__ . '/../../includes/db.php';
 
 header('Content-Type: application/json');
 
-$data = $_GET['date'] ?? null;
+$date = $_GET['date'] ?? null;
 
 if (!$date) {
     echo json_encode([]);
