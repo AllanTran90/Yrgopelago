@@ -1,3 +1,4 @@
+console.log("CALENDAR.JS VERSION: 2026-01-08-19:XX");
 document.addEventListener('DOMContentLoaded', () => {
 
   const arrivalInput = document.getElementById('arrivalInput');
@@ -115,7 +116,8 @@ function fetchAvailability(arrivalDate, departureDate = null) {
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      
+      console.log('AVAILABILITY DATA:', data);
+
       if (!data || Object.keys(data).length === 0){
         return;
       }
@@ -123,12 +125,13 @@ function fetchAvailability(arrivalDate, departureDate = null) {
       // update roomli
       document.querySelectorAll('#availability li').forEach(li => {
         const roomId = li.dataset.room;
-        const span = li.querySelector('span');
+        const span = li.querySelector('.status');
 
-        span.classList.remove('available', 'booked');
 
-          span.className = 'status ' + (data[roomId] ? 'available' : 'booked');
-          span.textContent = data[roomId] ?  'Available' : 'Booked';
+
+          span.classList.remove('available', 'booked');
+          span.className.add(data[roomId] ? 'available' : 'booked');
+          span.textContent = data[roomId] ?  'AVAILABLE!!!' : 'BOOKED!!!';
       
           });
 

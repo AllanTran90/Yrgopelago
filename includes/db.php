@@ -5,7 +5,7 @@ try {
     $dbPath = dirname(__DIR__) . '/database/yrgopelago.db';
 
     if (!file_exists($dbPath)) {
-        throw new Exception('Database file not found: ' . $dbPath);
+        throw new RuntimeException('Database file not found');
     }
 
     $pdo = new PDO('sqlite:' . $dbPath);
@@ -13,5 +13,5 @@ try {
     $pdo->exec('PRAGMA foreign_keys = ON');
 
 } catch (Throwable $error) {
-    die('Database error: ' . $error->getMessage());
+   throw $error;
 }
