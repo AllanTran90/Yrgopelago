@@ -1,13 +1,17 @@
 <?php
 declare(strict_types=1);
 
-    try {
-        
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../database/yrgopelago.db');
-        $pdo->exec('PRAGMA foreign_keys = ON');
-        $pdo ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+try {
+    $dbPath = __DIR__ . '/../database/yrgopelago.db';
+
+    if (!file_exists($dbPath)) {
+        throw new Exception('Database file not found: ' . $dbPath);
     }
 
-    catch(PDOException $error){
-    die("Database error: " . $error->getMessage());
-    }
+    $pdo = new PDO('sqlite:' . $dbPath);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->exec('PRAGMA foreign_keys = ON');
+
+} catch (Throwable $error) {
+    die('Database error: ' . $error->getMessage());
+}

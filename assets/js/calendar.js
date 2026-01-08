@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       day.classList.add('active');
 
       fetchAvailability(date);
+    
     });
   });
 

@@ -123,21 +123,21 @@ $featurePrices = [
   <li data-room="1">
     <label>
       <input type="checkbox" name="room_id" value="1">
-      Budget room : <span class="status available">Checking...</span>
+      Budget room : <span class="status available">Available</span>
     </label>
   </li>
 
   <li data-room="2">
     <label>
       <input type="checkbox" name="room_id" value="2">
-      Standard room: <span class="status available">Checking...</span>
+      Standard room: <span class="status available">Available</span>
     </label>
   </li>
 
   <li data-room="3">
     <label>
       <input type="checkbox" name="room_id" value="3">
-      Luxury room: <span class="status available">Checking...</span>
+      Luxury room: <span class="status available">Available</span>
     </label>
   </li>
 </ul>
@@ -164,7 +164,7 @@ $featurePrices = [
 
 </form>
 
-<!---------intro, rightside----->
+<!--------intro, right side------->
 <div class="hotel-intro">
     <h2>	The Cozy Maui Retreat </h2>
     <p>
