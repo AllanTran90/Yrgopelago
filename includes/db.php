@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 try {
-    $dbPath = __DIR__ . '/../database/yrgopelago.db';
+    $dbPath = dirname(__DIR__) . '/database/yrgopelago.db';
 
     if (!file_exists($dbPath)) {
         throw new Exception('Database file not found: ' . $dbPath);

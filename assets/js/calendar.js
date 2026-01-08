@@ -107,7 +107,7 @@ function clearActive(selector) {
 function fetchAvailability(arrivalDate, departureDate = null) {
   console.log('fetchAvailability CALLED with', arrivalDate, departureDate);
 
-  let url = `/yrgopelago/assets/availability/availability.php?arrival=${arrivalDate}`;
+  let url = `assets/availability/availability-api.php?arrival=${arrivalDate}`;
     if (departureDate) {
     url += `&departure=${departureDate}`;
   }
