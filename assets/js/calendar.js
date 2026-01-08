@@ -127,8 +127,8 @@ function fetchAvailability(arrivalDate, departureDate = null) {
 
         span.classList.remove('available', 'booked');
 
-          span.className = 'status ' + (data[roomId] ? 'available' : 'booked');
-          span.textContent = data[roomId] ? 'Available' : 'Booked';
+          span.className = 'status ' + (data[roomId] ? 'booked' : 'available');
+          span.textContent = data[roomId] ?  'Booked' : 'Available';
       
           });
 
@@ -136,7 +136,7 @@ function fetchAvailability(arrivalDate, departureDate = null) {
       const dayLis = document.querySelectorAll('.arrival-days li');
       dayLis.forEach(li => li.classList.remove('available', 'booked'));
 
-      const dayNumber = parseInt(date.split('-')[2], 10);
+      const dayNumber = parseInt(arrivalDate.split('-')[2], 10);
       const clickedDay = [...dayLis].find(li =>
         parseInt(li.textContent, 10) === dayNumber
       );

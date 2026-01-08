@@ -5,7 +5,7 @@ require __DIR__ . '/../../includes/db.php';
 require __DIR__ . '/availability.php';
 
 
-$date = $_GET['date'] ?? null;
+$date = $_GET['arrival'] ?? null;
 
 if ($date === null) {
     header('Content-Type: application/json');
