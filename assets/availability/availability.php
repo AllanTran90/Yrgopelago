@@ -11,7 +11,7 @@ if (!$date) {
     echo json_encode([]);
     exit;
 }
-
+error_log("Checking date: " . $date);
 function getAvailabilityForDate(PDO $pdo, string $date): array
 {
     $availability = [];
@@ -32,6 +32,7 @@ function getAvailabilityForDate(PDO $pdo, string $date): array
         ]);
 
         $availability[$roomId] = ((int)$stmt->fetchColumn() === 0);
+        error_log("Room $roomId count: " . $stmt->fetchColumn());
     }
 
     return $availability;

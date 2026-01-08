@@ -28,10 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
       clearActive('.departure-days');
       day.classList.add('active');
 
+      if (arrivalInput.value) {
+        fetchAvailability(arrivalInput.value, date);
       
-        fetchAvailability(arrivalInput.value + date);
-      
-    });
+    }
+  });
   });
 
   const roomPrices = {
@@ -102,10 +103,15 @@ function clearActive(selector) {
   document.querySelectorAll(`${selector} .active`)
     .forEach(el => el.classList.remove('active'));
 }
-function fetchAvailability(date) {
-  console.log('fetchAvailability CALLED with', date);
+function fetchAvailability(arrivalDate, departureDate = null) {
+  console.log('fetchAvailability CALLED with', arrivalDate, departureDate);
 
-  fetch(`/yrgopelago/assets/availability/availability.php?date=${date}`)
+  let url = `/yrgopelago/assets/availability/availability.php?arrival=${arrivalDate}`;
+    if (departureDate) {
+    url += `&departure=${departureDate}`;
+  }
+
+  fetch(url)
     .then(res => res.json())
     .then(data => {
       
