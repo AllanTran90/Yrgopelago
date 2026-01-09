@@ -116,6 +116,8 @@ $sql = "
     VALUES (
     :guest_name, :room_id, :arrival, :departure)";
 
+error_log('BOOKING INSERT OK');
+
 try {
 $statement = $pdo->prepare($sql);
 $statement->execute([

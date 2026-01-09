@@ -57,7 +57,7 @@ Fetch was used beacuse it was famililar and it was easir to work with within the
 If I had more time, the following improvments could be made:
 
 - Admin file to manage bookings and rooms
-- Replace Fetch with Guzzle
+- 
 
 ## Database
 
@@ -106,4 +106,6 @@ size VARCHAR (20),
 price INTEGER
 );
 
+## Link to my website
 
+"https://allantran-wu25.se/yrgopelago/"
