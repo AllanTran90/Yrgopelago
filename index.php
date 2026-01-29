@@ -2,6 +2,10 @@
 declare(strict_types=1);
 require __DIR__ . '/includes/db.php';
 
+$features = $pdo
+    ->query('SELECT id, name, price FROM features')
+    ->fetchAll(PDO::FETCH_ASSOC);
+
 $roomPrices = [
     1 => 10, 
     2 => 20, 
@@ -104,18 +108,15 @@ $featurePrices = [
     </div>
 
     <h2>Features</h2>
-     <label> 
-        <input type="checkbox" name="features[]" value="scuba"> Scuba diving (+5) 
-    </label><br> 
-    <label> 
-        <input type="checkbox" name="features[]" value="pingpong"> Ping pong (+5) 
-    </label><br> 
-    <label> 
-        <input type="checkbox" name="features[]" value="bicykle"> Bicycle (+5) 
-    </label><br> 
-    <label> 
-        <input type="checkbox" name="features[]" value="casino"> Casino (+17) 
-    </label> <br><br>
+    <?php foreach($features as $feature):?>
+      <label>
+        <input type="checkbox" name="features[]" value="<?= $feature['id'] ?>">
+
+        <?= htmlspecialchars($feature['name']) ?>
+        (+<?= $feature['price'] ?>)
+      </label><br>
+      <?php endforeach; ?>
+    
 
 <h2>Room availability</h2>
 
