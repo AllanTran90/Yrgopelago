@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
+session_start();
 require __DIR__ . '/includes/db.php';
+
+$rooms = $pdo
+    ->query('SELECT id, name, price, description FROM rooms')
+    ->fetchAll(PDO::FETCH_ASSOC);
 
 $features = $pdo
     ->query('SELECT id, name, price FROM features')
@@ -18,6 +23,27 @@ $features = $pdo
 <body>
 <div class="page">
 
+<section class="hero">
+  <div class="hero-content">
+    <h1>The Cozy Maui Retreat</h1>
+    <p>
+      A relaxing ocean-side retreat on the Yrgopelag islands.
+      Choose between budget, standard or luxury rooms – all just steps from the sea.
+    </p>
+
+    <a href="#booking" class="cta-button">
+      Book your stay
+    </a>
+  </div>
+</section>
+
+<?php if (!empty($_SESSION['error'])): ?>
+  <p class="error">
+    <?= htmlspecialchars($_SESSION['error']) ?>
+  </p>
+  <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
 <?php if (isset($_GET['booked'])): ?>
   <p class="success">
     ✅ Booking completed successfully!
@@ -26,7 +52,7 @@ $features = $pdo
 
 <h1>Welcome to The Cozy Maui Retreat ⭐⭐⭐</h1>
 
-<form method="post" action="booking.php">
+<form id="booking" method="post" action="booking.php">
 
     <label>
         Name:
@@ -62,10 +88,18 @@ $features = $pdo
           </div>
 
           <ul class="days arrival-days">
-            <?php for ($i = 1; $i <= 31; $i++): ?>
-              <li><?= $i ?></li>
-            <?php endfor; ?>
-          </ul>
+
+          <!-- Empty days (Mon–Wed) -->
+          <?php for ($i = 0; $i < 3; $i++): ?>
+            <li class="empty"></li>
+          <?php endfor; ?>
+
+          <!-- Days 1–31 -->
+          <?php for ($day = 1; $day <= 31; $day++): ?>
+            <li><?= $day ?></li>
+          <?php endfor; ?>
+        </ul>
+
         </div>
 
         <h2 class="calendar-title">Departure</h2>
@@ -80,10 +114,19 @@ $features = $pdo
           </div>
 
           <ul class="days departure-days">
-            <?php for ($i = 1; $i <= 31; $i++): ?>
-              <li><?= $i ?></li>
-            <?php endfor; ?>
+
+          <!-- Empty days (Mon–Wed) -->
+          <?php for ($i = 0; $i < 3; $i++): ?>
+            <li class="empty"></li>
+          <?php endfor; ?>
+
+          <!-- Days 1–31 -->
+          <?php for ($day = 1; $day <= 31; $day++): ?>
+            <li><?= $day ?></li>
+          <?php endfor; ?>
+
           </ul>
+
         </div>
 
       </div>
