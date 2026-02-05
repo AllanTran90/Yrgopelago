@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require __DIR__ . '/includes/db.php';
 require __DIR__ . '/includes/centralbank.php';
 
@@ -8,47 +9,40 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$guestName = trim(($_POST['guest_name']) ?? '' );
-$room_id = ((int)$_POST['room_id']?? 0);
-$arrival = ($_POST['arrival'] ?? '');
-$departure = ($_POST['departure'] ?? '');
+$guestName    = trim($_POST['guest_name'] ?? '');
+$room_id      = (int)($_POST['room_id'] ?? 0);
+$arrival      = $_POST['arrival'] ?? '';
+$departure    = $_POST['departure'] ?? '';
 $transferCode = trim($_POST['transfer_code'] ?? '');
+$features     = $_POST['features'] ?? [];
 
-$selectFeatures = $_POST['features'] ?? [];
-$featurePrices =[
-    'scuba' => 5,
-    'pingpong' => 5,
-    'bicykle' => 5,
-    'casino' => 17,
-];
 
-$featureCost = 0;
-foreach ($selectFeatures as $feature){
-    if (isset($featurePrices[$feature])){
-        $featureCost += $featurePrices[$feature];
-    }
-}
-
-if ($guestName === '' || $room_id === 0 || $arrival === '' || $departure === ''){
-    echo "Booking failed. <a href='index.php'>Gå tillbaka</a>";
+// validation
+if ($guestName === '' || $room_id === 0 || $arrival === '' || $departure === '') {
+    $_SESSION['error'] = 'Booking failed.';
+    header('Location: index.php');
     exit;
 }
 
 if ($arrival >= $departure) {
-   echo "Wrong booking date. <a href='index.php'>Gå tillbaka</a>";
-   exit;
-}
-
-if ($arrival < '2026-01-01' || $arrival > '2026-01-31'){
-    echo "Arrival must be within January 2026.";
+    $_SESSION['error'] = 'Wrong booking date.';
+    header('Location: index.php');
     exit;
 }
 
-if ($departure < '2026-01-02' || $departure > '2026-02-01'){
-    echo "Departure must be within January 2026.";
+if ($arrival < '2026-01-01' || $arrival > '2026-01-31') {
+    $_SESSION['error'] = 'Arrival must be within January 2026.';
+    header('Location: index.php');
     exit;
-}     
+}
 
+if ($departure < '2026-01-02' || $departure > '2026-02-01') {
+    $_SESSION['error'] = 'Departure must be within January 2026.';
+    header('Location: index.php');
+    exit;
+}
+
+// availability check
 $sql = "
 SELECT COUNT(*)
 FROM bookings
@@ -57,92 +51,129 @@ AND arrival < :departure
 AND departure > :arrival
 ";
 
-try{
-$statement = $pdo ->prepare($sql);
-$statement -> execute([
-    ':room_id' => $room_id,
-    ':arrival' => $arrival,
-    ':departure' => $departure
-]);
-}catch(PDOException $error){
+try {
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        ':room_id'   => $room_id,
+        ':arrival'   => $arrival,
+        ':departure' => $departure
+    ]);
+} catch (PDOException $error) {
     error_log('Availability check failed: ' . $error->getMessage());
-    echo "Booking failed";
+    $_SESSION['error'] = 'Booking failed.';
+    header('Location: index.php');
     exit;
 }
 
-$booked = $statement-> fetchColumn();
-
-if ($booked > 0) {
-    echo "This room is not available these date.";
+if ($statement->fetchColumn() > 0) {
+    $_SESSION['error'] = 'This room is not available for selected dates.';
+    header('Location: index.php');
     exit;
 }
 
-//coiunting nights
-$arrivalDate = new DateTime($arrival);
+// nights
+$arrivalDate   = new DateTime($arrival);
 $departureDate = new DateTime($departure);
-$nights = $arrivalDate->diff($departureDate)->days;
+$nights        = $arrivalDate->diff($departureDate)->days;
 
-//Get room price
-try{
-$statement = $pdo->prepare('SELECT price FROM rooms WHERE id = :id');
-$statement-> execute([':id' => $room_id]);
-$room = $statement->fetch();
-
+// room price (DB)
+try {
+    $statement = $pdo->prepare(
+        'SELECT price FROM rooms WHERE id = :id'
+    );
+    $statement->execute([':id' => $room_id]);
+    $room = $statement->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     error_log('Room lookup failed: ' . $e->getMessage());
-    echo "Booking failed.";
+    $_SESSION['error'] = 'Booking failed.';
+    header('Location: index.php');
     exit;
 }
 
-if ($room === false){
-      error_log('Room not found. room_id=' . $room_id);
-    echo "Booking failed. <a href='index.php'>Go back</a>";
+if ($room === false) {
+    $_SESSION['error'] = 'Invalid room selected.';
+    header('Location: index.php');
     exit;
 }
 
-$pricePernight = (int)$room['price'];
-$roomCost = $pricePernight * $nights;
-$totalCost = $roomCost + $featureCost;
+$pricePerNight = (int)$room['price'];
 
-if (!validateTransferCode($transferCode, $totalCost)) {
-    echo "Payment failed. Invalid transfer code.";
+// feature price (DB)
+$totalFeaturePrice = 0;
+
+if (!empty($features)) {
+    $placeholders = implode(',', array_fill(0, count($features), '?'));
+
+    $statement = $pdo->prepare(
+        "SELECT COALESCE(SUM(price), 0)
+         FROM features
+         WHERE id IN ($placeholders)"
+    );
+
+    $statement->execute($features);
+    $totalFeaturePrice = (int)$statement->fetchColumn();
+}
+
+// total price
+$totalPrice = ($pricePerNight * $nights) + $totalFeaturePrice;
+
+
+// payment validation
+if (!validateTransferCode($transferCode, $totalPrice)) {
+    $_SESSION['error'] = 'Payment failed. Invalid transfer code.';
+    header('Location: index.php');
     exit;
 }
 
-
+// insert booking
 $sql = "
-    INSERT INTO bookings (
-    guest_name, room_id, arrival, departure)
-    VALUES (
-    :guest_name, :room_id, :arrival, :departure)";
-
-error_log('BOOKING INSERT OK');
+INSERT INTO bookings (
+    guest_name,
+    room_id,
+    arrival,
+    departure,
+    total_price
+) VALUES (
+    :guest_name,
+    :room_id,
+    :arrival,
+    :departure,
+    :total_price
+)";
 
 try {
-$statement = $pdo->prepare($sql);
-$statement->execute([
-    ':guest_name' => $guestName,
-    ':room_id' => $room_id,
-    ':arrival' => $arrival,
-    ':departure' => $departure
-]);}
-     catch (PDOException $e) {
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        ':guest_name'  => $guestName,
+        ':room_id'     => $room_id,
+        ':arrival'     => $arrival,
+        ':departure'   => $departure,
+        ':total_price' => $totalPrice
+    ]);
+} catch (PDOException $e) {
     error_log('Booking insert failed: ' . $e->getMessage());
-    echo "Booking failed.";
+    $_SESSION['error'] = 'Booking failed.';
+    header('Location: index.php');
     exit;
-};
+}
 
-$_SESSION['confirmation'] = [
-    'guest_name'   => $guestName,
-    'room_name'    => ['','Budget','Standard','Luxury'][$room_id],
-    'arrival'      => $arrival,
-    'departure'    => $departure,
-    'nights'       => $nights,
-    'room_cost'    => $roomCost,
-    'feature_cost' => $featureCost,
-    'total_cost'   => $totalCost,
-    'transfer_code'=> $transferCode,
-];
+$bookingId = $pdo->lastInsertId();
 
-header('Location: confirmation.php');
+// insert booking features
+if (!empty($features)) {
+    $statement = $pdo->prepare(
+        "INSERT INTO booking_features (booking_id, feature_id)
+         VALUES (:booking_id, :feature_id)"
+    );
+
+    foreach ($features as $featureId) {
+        $statement->execute([
+            ':booking_id' => $bookingId,
+            ':feature_id' => (int)$featureId
+        ]);
+    }
+}
+
+// success
+header('Location: index.php?booked=1');
 exit;
