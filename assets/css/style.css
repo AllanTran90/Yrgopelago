@@ -114,6 +114,11 @@ body {
 
 }
 
+.days li.empty {
+  pointer-events: none;
+  background: transparent;
+}
+
 .layout{
     display: flex;
     gap: 40px;
