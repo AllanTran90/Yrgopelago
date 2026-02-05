@@ -6,18 +6,6 @@ $features = $pdo
     ->query('SELECT id, name, price FROM features')
     ->fetchAll(PDO::FETCH_ASSOC);
 
-$roomPrices = [
-    1 => 10, 
-    2 => 20, 
-    3 => 30  
-];
-
-$featurePrices = [
-    'scuba'    => 5,
-    'pingpong' => 5,
-    'bicycle'  => 5,
-    'casino'   => 17
-];
 
 ?>
 <!DOCTYPE html>
