@@ -4,7 +4,7 @@ declare(strict_types=1);
 session_start();
 
 if (!isset($_SESSION['confirmation'])) {
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -53,7 +53,7 @@ unset($_SESSION['confirmation']);
     <code><?= htmlspecialchars($data['transfer_code']) ?></code>
 </p>
 
-<a href="index.php" class="action-link">>⬅ Book another stay</a>
+<a href="/index.php" class="action-link">>⬅ Book another stay</a>
 
 </body>
 </html>

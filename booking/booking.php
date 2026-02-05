@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-require __DIR__ . '/includes/db.php';
-require __DIR__ . '/includes/centralbank.php';
+require __DIR__ . '/../includes/db.php';
+require __DIR__ . '/../includes/centralbank.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -20,25 +20,25 @@ $features     = $_POST['features'] ?? [];
 // validation
 if ($guestName === '' || $room_id === 0 || $arrival === '' || $departure === '') {
     $_SESSION['error'] = 'Booking failed.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
 if ($arrival >= $departure) {
     $_SESSION['error'] = 'Wrong booking date.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
 if ($arrival < '2026-01-01' || $arrival > '2026-01-31') {
     $_SESSION['error'] = 'Arrival must be within January 2026.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
 if ($departure < '2026-01-02' || $departure > '2026-02-01') {
     $_SESSION['error'] = 'Departure must be within January 2026.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -61,13 +61,13 @@ try {
 } catch (PDOException $error) {
     error_log('Availability check failed: ' . $error->getMessage());
     $_SESSION['error'] = 'Booking failed.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
 if ($statement->fetchColumn() > 0) {
     $_SESSION['error'] = 'This room is not available for selected dates.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -86,13 +86,13 @@ try {
 } catch (PDOException $e) {
     error_log('Room lookup failed: ' . $e->getMessage());
     $_SESSION['error'] = 'Booking failed.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
 if ($room === false) {
     $_SESSION['error'] = 'Invalid room selected.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -121,7 +121,7 @@ $totalPrice = ($pricePerNight * $nights) + $totalFeaturePrice;
 // payment validation
 if (!validateTransferCode($transferCode, $totalPrice)) {
     $_SESSION['error'] = 'Payment failed. Invalid transfer code.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -153,7 +153,7 @@ try {
 } catch (PDOException $e) {
     error_log('Booking insert failed: ' . $e->getMessage());
     $_SESSION['error'] = 'Booking failed.';
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -175,5 +175,5 @@ if (!empty($features)) {
 }
 
 // success
-header('Location: index.php?booked=1');
+header('Location: ../index.php?booked=1');
 exit;

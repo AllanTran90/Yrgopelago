@@ -1,17 +1,45 @@
+:root {
+  --color-primary: #0191f7;
+  --color-bg-light: #eee;
+  --color-bg-muted: #ddd;
+
+  --color-text-main: #ffffff;
+  --color-text-muted: #777;
+  --color-text-weekday: #666;
+
+  --color-available-bg: #d4f7dc;
+  --color-available-text: #1af406;
+
+  --color-booked-bg: #f80404;
+  --color-booked-text: #7a1c1c;
+
+  --color-active-bg: #1abc9c;
+  --color-hover-bg: #f7d4d4;
+
+  --color-link: #056bfb;
+  --color-link-hover: #cafb05;
+
+  --shadow-page: 0 0.125rem 0.375rem rgba(0,0,0,0.6);
+  --shadow-text: 0 0.125rem 0.375rem rgba(0,0,0,0.85);
+
+  --radius-sm: 0.25rem;
+  --radius-img: 0.875rem;
+}
+
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 body {
-    font-family: Verdana, sans-serif;
+  font-family: Verdana, sans-serif;
 }
 
 .calendar {
-  width: 17.5rem;              
+  width: 17.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,10 +53,10 @@ body {
 }
 
 .month {
-  padding: 0.5rem 0;           
-  width: 13.75rem;             
-  margin: 0 0 0.5rem 0;        
-  background: #0191f7;
+  padding: 0.5rem 0;
+  width: 13.75rem;
+  margin: 0 0 0.5rem 0;
+  background: var(--color-primary);
   align-items: center;
   display: flex;
   justify-content: center;
@@ -40,33 +68,33 @@ body {
 }
 
 .month ul li {
-  color: white;
-  font-size: 0.9375rem;        
+  color: var(--color-text-main); 
+  font-size: 0.9375rem;
   line-height: 1.2;
   text-transform: uppercase;
-  letter-spacing: 0.1875rem;   
+  letter-spacing: 0.1875rem;
   text-align: center;
 }
 
 .weekdays {
   margin: 0;
-  padding: 0.625rem 0;         
-  background-color: #ddd;
+  padding: 0.625rem 0;
+  background-color: var(--color-bg-muted); 
 }
 
 .weekdays li {
   display: inline-block;
   width: 13%;
-  color: #666;
-  font-size: 0.6875rem;       
+  color: var(--color-text-weekday); 
+  font-size: 0.6875rem;
   text-align: center;
 }
 
 .days {
-  padding: 0.625rem 0;        
-  background: #eee;
+  padding: 0.625rem 0;
+  background: var(--color-bg-light); 
   margin: 0;
-  max-width: 16.25rem;         
+  max-width: 16.25rem;
   text-align: center;
 }
 
@@ -75,40 +103,40 @@ body {
   display: inline-block;
   width: 13%;
   text-align: center;
-  margin-bottom: 0.3125rem;    
-  font-size: 0.6875rem;        
-  color: #777;
+  margin-bottom: 0.3125rem;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted); 
   cursor: pointer;
-  padding: 0.25rem 0;          
-  border-radius: 0.25rem;     
+  padding: 0.25rem 0;
+  border-radius: var(--radius-sm);
   pointer-events: auto;
   position: relative;
   z-index: 2;
 }
 
 .days li.available {
-    background-color: #d4f7dc;
-    color: #1af406;
+  background-color: var(--color-available-bg);
+  color: var(--color-available-text);
 }
 
 .days li.booked {
-    background-color: #f80404;
-    color: #7a1c1c;
+  background-color: var(--color-booked-bg);
+  color: var(--color-booked-text);
 }
 
 .days li.active {
-  padding: 0.3125rem;          
-  background: #1abc9c;
-  color: white !important;
-  border-radius: 0.25rem;
+  padding: 0.3125rem;
+  background: var(--color-active-bg);
+  color: var(--color-text-main) !important;
+  border-radius: var(--radius-sm);
 }
 
 .days li:hover {
-    background-color: #f7d4d4;
+  background-color: var(--color-hover-bg);
 }
 
 .days li.booked:hover {
-    background-color: #d4f7dc;
+  background-color: var(--color-available-bg);
 }
 
 .days li.empty {
@@ -117,67 +145,68 @@ body {
 }
 
 .layout {
-    display: flex;
-    gap: 2.5rem;               
-    align-items: flex-start;
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
 }
 
 .content {
-    flex: 1;
+  flex: 1;
 }
 
 #availability li {
-    margin-bottom: 0.375rem;   
+  margin-bottom: 0.375rem;
 }
 
 .available {
-    color: #1af406;
-    font-weight: bold;
+  color: var(--color-available-text);
+  font-weight: bold;
 }
 
 .booked {
-    color: #f80404;
-    font-weight: bold;
+  color: var(--color-booked-bg);
+  font-weight: bold;
 }
 
 .calendar-stack {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;                 
-  max-width: 17.5rem;          
+  gap: 2.5rem;
+  max-width: 17.5rem;
+}
 
 .calendar-title {
-  width: 13.75rem;             
+  width: 13.75rem;
   text-align: center;
 }
 
 .layout {
   display: flex;
-  gap: 2.5rem;                
+  gap: 2.5rem;
   align-items: flex-start;
   margin: 0 auto;
-  max-width: 68.75rem;         
+  max-width: 68.75rem;
 }
 
 .room-images {
-  width: 22.5rem;              
+  width: 22.5rem;
   display: flex;
-  margin-top: 2.5rem;          
+  margin-top: 2.5rem;
   flex-direction: column;
-  gap: 1.5rem;                
+  gap: 1.5rem;
 }
 
 .room-images img {
   width: 100%;
-  height: 13.75rem;           
+  height: 13.75rem;
   object-fit: cover;
-  border-radius: 0.875rem;     
+  border-radius: var(--radius-img);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  text-shadow: 0 0.125rem 0.375rem rgba(0,0,0,0.6); 
+  text-shadow: var(--shadow-page);
   background-image: url('../images/background.png');
   background-size: cover;
   background-position: center;
@@ -188,30 +217,30 @@ body {
 label,
 p,
 li {
-  color: #ffffff;
-  text-shadow: 0 0.125rem 0.375rem rgba(0,0,0,0.85);
+  color: var(--color-text-main);
+  text-shadow: var(--shadow-text);
 }
 
 .hotel-intro {
   position: absolute;
-  top: 12.5rem;                
+  top: 12.5rem;
   right: 0;
-  max-width: 26.25rem;         
+  max-width: 26.25rem;
 }
 
 .page {
-  max-width: 75rem;           
+  max-width: 75rem;
   margin: 0 auto;
-  padding: 2.5rem;             
+  padding: 2.5rem;
   background: transparent;
   color: #fff;
 }
 
 .action-link {
-  color: #056bfb;
+  color: var(--color-link);
   font-weight: 600;
 }
 
 .action-link:hover {
-  color: #cafb05;
+  color: var(--color-link-hover);
 }
