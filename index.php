@@ -106,29 +106,19 @@ $features = $pdo
       <?php endforeach; ?>
     
 
-<h2>Room availability</h2>
+<h2>Rooms</h2>
 
-<ul id="availability">
-  <li data-room="1">
-    <label>
-      <input type="checkbox" name="room_id" value="1">
-      Budget room : <span class="status available">Checking...</span>
-    </label>
-  </li>
-
-  <li data-room="2">
-    <label>
-      <input type="checkbox" name="room_id" value="2">
-      Standard room: <span class="status available">Checking...</span>
-    </label>
-  </li>
-
-  <li data-room="3">
-    <label>
-      <input type="checkbox" name="room_id" value="3">
-      Luxury room: <span class="status available">Checking...</span>
-    </label>
-  </li>
+<ul id="rooms">
+<?php foreach ($rooms as $room): ?>
+    <li data-room="<?= $room['id'] ?>">
+        <label>
+            <input type="radio" name="room_id" value="<?= $room['id'] ?>" required>
+            <?= htmlspecialchars($room['name']) ?>
+              <strong>Price: <?= $room['price'] ?> kr / night</strong>
+            <span class="status"></span>
+        </label>
+    </li>
+<?php endforeach; ?>
 </ul>
 
     <br><br>
