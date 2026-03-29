@@ -109,3 +109,20 @@ price INTEGER
 ## Link to my website
 
 "https://allantran-wu25.se/yrgopelago/"
+
+## FEEDBACK
+
+#1: This one will be less about a single line of code and more of a structural feedback. I don't see a .gitignore file in your repo, and it has resulted in the vendor folder making it onto the public repo, as well as .DS_Store sneaking into your folders. I can't see a .env which is good but I can't see an .env.example either, so I can't be sure if your project has an API_KEY that it uses to communicate with the centralbank. The database file is also in the repo.
+
+#2: Another structural feedback I would like to give is that there is a lot of php files in the root folder. I think it would be easier to navigate if files like booking.php were in their own backend folder. The assets folder I feel contains items that should be in said backend folder, namely the items in assets/availability. Maybe the includes folder could be expanded to serve this purpose.
+
+#3: With the database inserts, I'm noticing a lack of any table that keeps track of the activities.
+
+#4: Perhaps the guest's name could be in the users table instead of the bookings table?
+
+#5: includes/centralbank.php: 38-39- Putting all the centralbank communication in a dedicated .php file was a great move, but I see no receipt function for communicating with the centralbank. I think it would be good to put it here. 
+
+#6: index.php: 5-9 - These are unnecessary since the prices for the activities are already in the database, so making them a variable here is redundant and means if you wanna change the prices you have to change the priced for a room in more than one place, both here and in the db file.
+
+#7: Great job on committing often! You did it way more than me and it's a great habit to have. I didn't commit enough and sometimes forgot to do so, which made versions bulky and would cause issues with finding exact issues.
+
